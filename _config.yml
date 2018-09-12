@@ -26,6 +26,13 @@ permalink: pretty
 
 repository: hurricane-response/florence_website
 
+collections:
+  states:
+    output: true
+
+  
+
+
 # Build settings
 markdown: kramdown
 # theme: minima

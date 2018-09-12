@@ -53,6 +53,24 @@
 		</section>
 		<main role="main">
 			<section class="section">
+				<h2 class="title">
+					State Resources
+				</h2>
+				<div class="container is-fluid">
+						{% for state in site.states %}
+						<div class="column">
+							<a class="button is-large is-info" href="{{ site.url }}{{ state.permalink }}">
+							{{ state.name }}
+							</a>
+						</div>
+						
+						</div>
+						
+					  {% endfor %}
+				</div>
+				
+			</section>
+			<section class="section">
 					<div class="container is-fluid">
 							<h2 class="title is-2">RESOURCE LINKS</h2>
 							<h3 class="title is-3">DO YOU NEED HELP?</h3>
