@@ -15,14 +15,27 @@
 </head>
 
 <body>
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="/">
-      <img src="{{site.baseurl}}/assets/images/brigade_sm.png" alt="Code for America Hurricane Florence Response" width="78" height="28">
-    </a>
-
-  </div>
-</nav>
+<nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
+			<div class="container">
+				<div class="navbar-brand">
+					<a class="navbar-item" href="/">
+						<img src="{{site.baseurl}}/assets/images/brigade_sm.png" alt="Code for America Hurricane Florence Response" width="78"
+						 height="28">
+					</a>
+				</div>
+				<div class="navbar-menu">
+					<div class="navbar-start">
+						<a class="navbar-item" href="{{site.url}}">
+							Home
+						</a>
+					</div>
+					<div class="navbar-end">
+						<a class="navbar-item" href="https://github.com/hurricane-response/florence_website">
+							GitHub
+						</a>
+					</div>
+				</div>
+		</nav>
 		<main role="main">
 			<div class="container">
 					{{ content }}
