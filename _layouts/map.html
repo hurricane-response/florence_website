@@ -8,7 +8,6 @@
 
         <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
         <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-         <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
         <link rel="stylesheet" href="{{site.baseurl}}/assets/css/main.css">
         <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.github.url | prepend: site.url }}">
         <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.github.url | prepend: site.url }}">
@@ -73,23 +72,6 @@
                 </p>
             </div>
         </footer>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/zenscroll/4.0.0/zenscroll-min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/html5-history-api/4.2.8/history.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jets/0.14.0/jets.min.js"></script>
-  <script type="text/javascript" src="//unpkg.com/in-view@0.6.1/dist/in-view.min.js"></script>
-  <script type="text/javascript" src="//cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
-  <script type="text/javascript" src="{{site.baseurl}}/assets/map/anchorme.min.js"></script>  
-
-  <script type="text/javascript" src="{{site.baseurl}}/assets/map/config.js"></script>
-  <script type="text/javascript" src="{{site.baseurl}}/assets/map/markers-collection.js"></script>
-  <script type="text/javascript" src="{{site.baseurl}}/assets/map/utils.js"></script>
-  <script type="text/javascript" src="{{site.baseurl}}/assets/map/views.js"></script>
-  <script type="text/javascript" src="{{site.baseurl}}/assets/map/shelters.js"></script>
-  <script type="text/javascript" src="{{site.baseurl}}/assets/map/needs.js"></script>
-  <script type="text/javascript" src="{{site.baseurl}}/assets/map/main.js"></script>
+        
     </body>
 </html>
