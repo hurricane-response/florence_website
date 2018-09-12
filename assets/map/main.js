@@ -3,8 +3,8 @@
   var LIST_ELEMENT = document.getElementById('list');
   var SIDEBAR_ELEMENT = document.querySelector('.sidebar-help');
 
-  window.SEARCH_WRAPPER_ELEMENT = document.querySelector('.halp-list--search');
-  window.SIDEBAR_TOP = document.querySelector('.map-form');
+  window.SEARCH_WRAPPER_ELEMENT = document.querySelector('.map-form');
+  window.SIDEBAR_TOP = document.querySelector('.sidebar-help');
 
   var ACTIVE_PLACE;
 
@@ -111,18 +111,18 @@
       searchTag: '#search',
       contentTag: '#list'
     });
-    var inViewHalpTop = inView('.halp-form');
+    var inViewHalpTop = inView('.sidebar-help');
 
     SIDEBAR_ELEMENT.addEventListener('scroll', _.throttle(function(){
       inViewHalpTop.check();
     }, 100));
 
     inViewHalpTop.on('enter', function(){
-      SEARCH_WRAPPER_ELEMENT.className = 'halp-list--search';
+      SEARCH_WRAPPER_ELEMENT.className = 'map-form';
     });
 
     inViewHalpTop.on('exit', function(){
-      SEARCH_WRAPPER_ELEMENT.className = 'halp-list--search fixed';
+      SEARCH_WRAPPER_ELEMENT.className = 'map-form fixed';
     });
 
   }
