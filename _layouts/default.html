@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+	<meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+	<link rel="stylesheet" href= "{{site.baseurl}}/assets/css/main.css">
+	<link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.github.url | prepend: site.url }}">
+	<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.github.url | prepend: site.url }}">
+</head>
+
+<body>
+<div class="containier">
+	<div class="navbar is-transparent">
+		<div class="navbar-brand">
+			<a class="navbar-item" href="{{ site.github.url }}/">{{ site.title }}</a>
+		</div>
+	</div>
+</div>
+<section class="hero-home is-medium">
+<div class="hero-body">
+  <div class="container has-text-centered">
+    <h1 class="title is-1">
+      HURRICANE IRMA FLORIDA EMERGENCY RESOURCES
+    </h1>
+    <a class="button is-info is-medium" href="http://irma-api.herokuapp.com">Shelter Availability and Volunteer Needs</a>
+  </div>
+</div>
+</section>
+		<main role="main">
+			<div class="container">
+					<h2 class="title is-2">RESOURCE LINKS</h2>
+					<h3 class="title is-3">DO YOU NEED HELP?</h3>
+					<div class="columns">
+						{% assign pages_list = site.pages %}
+			 			{% for node in pages_list %}
+			 			{% if node.title != null %}
+			 			{% if node.layout == "page" %}
+			 		<div class="column">
+					 	<a class="button is-large is-info" href="{{ node.url }}">{{ node.title }}</a>
+		 			</div>
+			 		{% endif %}
+ 					{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</main>
+		<section class="hero is-primary is-small">
+		<div class="hero-body">
+		  <div class="container has-text-centered">
+		    <h3 class="title is-3">
+		      See Something Missing?
+		    </h3>
+				<p>To add more resources to these lists, please submit them here.</p>
+		    <p><a class="button is-light" href="https://github.com/miklb/irmarelief-static/tree/master">GitHub repo</a></p>
+		  </div>
+		</div>
+		</section>
+	<footer class="footer" role="contentinfo">
+		<div class="container has-text-centered">
+			<h3 class="title is-3">What is this?</h3>
+			<p>This site is built by a collective of civic minded people from across the country.
+				To participate in data collection, curation, or any other help, please join us the <a href="https://join.slack.com/t/irma-response/shared_invite/MjM3NzI4NDM2OTUxLTE1MDQ2NDc0OTQtZmU2YWUxOGJmYg">Slack team</a>.
+			</p>
+		</div>
+	</footer>
+</body>
+
+</html>
