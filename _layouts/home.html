@@ -18,19 +18,37 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img src="" alt="Code for America Hurricane Florence Response" width="112" height="28">
+      <img src="{{site.baseurl}}/assets/images/brigade_sm.png" alt="Code for America Hurricane Florence Response" width="78" height="28">
     </a>
 
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
   </div>
 </nav>
+<section class="hero-home is-medium">
+<div class="hero-body">
+  <div class="container has-text-centered">
+    <h1 class="title is-1">
+      HURRICANE FLORENCE EMERGENCY RESOURCES
+    </h1>
+    <a class="button is-info is-medium" href="https://hurricane-florence-api.herokuapp.com/">Shelter Availability and Volunteer Needs</a>
+  </div>
+</div>
+</section>
 		<main role="main">
 			<div class="container">
-					{{ content }}
+					<h2 class="title is-2">RESOURCE LINKS</h2>
+					<h3 class="title is-3">DO YOU NEED HELP?</h3>
+					<div class="columns">
+						{% assign pages_list = site.pages %}
+			 			{% for node in pages_list %}
+			 			{% if node.title != null %}
+			 			{% if node.layout == "page" %}
+			 		<div class="column">
+					 	<a class="button is-large is-info" href="{{ node.url }}">{{ node.title }}</a>
+		 			</div>
+			 		{% endif %}
+ 					{% endif %}
+					{% endfor %}
+				</div>
 			</div>
 		</main>
 		<section class="hero is-primary is-small">
