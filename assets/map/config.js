@@ -4,8 +4,8 @@
   config.event = 'Florence';
   // config.additionalText = '**Need help? [Find shelters here.](irmashelters.org/map-link-here-when-ready)**';
 
-  config.dataEntryPortal = '//hurricane-florence-api';
-  config.apiBaseURL = '//hurricane-florence-api.com/api/v1/';
+  config.dataEntryPortal = '//hurricane-florence-api.herokuapp.com/';
+  config.apiBaseURL = '///hurricane-florence-api.herokuapp.com/api/v1/';
   config.googleMapsAPIKey = 'AIzaSyAS7v3CoZRR-8jNggD_vBd8OYIOADoxsXY';
 
   config.mapDefaults = {
