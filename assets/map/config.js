@@ -6,7 +6,7 @@
 
   config.dataEntryPortal = '//hurricane-florence-api';
   config.apiBaseURL = '//hurricane-florence-api.com/api/v1/';
-  config.googleMapsAPIKey = 'AIzaSyAP7W-h_jBmtgRcROX1y-ZDNpTorc-PwlU';
+  config.googleMapsAPIKey = 'AIzaSyBEDOXfh2FoQi1LWA4P4ENZRFmJ6TEyww8';
 
   config.mapDefaults = {
     center: {
