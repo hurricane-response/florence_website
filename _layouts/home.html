@@ -47,22 +47,25 @@
 			</div>
 		</section>
 		<main role="main">
-			<div class="container is-fluid">
-				<h2 class="title is-2">RESOURCE LINKS</h2>
-				<h3 class="title is-3">DO YOU NEED HELP?</h3>
-				<div class="columns">
-					{% assign pages_list = site.pages %}
-					{% for node in pages_list %}
-					{% if node.title != null %}
-					{% if node.layout == "page" %}
-					<div class="column">
-						<a class="button is-large is-info" href="{{ node.url }}">{{ node.title }}</a>
-					</div>
-					{% endif %}
-					{% endif %}
-					{% endfor %}
-				</div>
-			</div>
+			<section class="section">
+					<div class="container is-fluid">
+							<h2 class="title is-2">RESOURCE LINKS</h2>
+							<h3 class="title is-3">DO YOU NEED HELP?</h3>
+							<div class="columns">
+								{% assign pages_list = site.pages %}
+								{% for node in pages_list %}
+								{% if node.title != null %}
+								{% if node.layout == "page" %}
+								<div class="column">
+									<a class="button is-large is-info" href="{{ node.url }}">{{ node.title }}</a>
+								</div>
+								{% endif %}
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+
+			</section>
 		</main>
 		<section class="hero is-primary is-small">
 			<div class="hero-body">
