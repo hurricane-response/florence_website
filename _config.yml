@@ -36,6 +36,8 @@ txtbot_trigger: Florence
 # txtbot display - i.e. 1-800-555-1212 vs 18005551212
 textbot_display: 898211
 
+# mapbox access token
+# mapbox_access_token: pk.eyJ1Ijoic2JtYTQ0IiwiYSI6ImNqbTB1bGFhNjBmMmwzcW9iZjlnaXFvdzIifQ.yTacIggcE99yYxVKIX7vIQ
 
 
 # Build settings
