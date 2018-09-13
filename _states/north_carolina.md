@@ -23,14 +23,14 @@ permalink: /north-carolina
     <td>
       <li>Entire County</li>
     </td>
-  <tr>
+  </tr>
   <tr>
     <td>Bertie</td>
     <td></td>
     <td>
       <li>Low lying areas and the Waterfront</li>
     </td>
-  <tr>
+  </tr>
   <tr>
     <td>Brunswick</td>
     <td>
@@ -43,7 +43,7 @@ permalink: /north-carolina
       <li>Oak Island (Residents)</li>
       <li>Navassa</li>
     </td>
-  <tr>
+  </tr>
   <tr>
     <td>Carteret</td>
     <td>
@@ -53,29 +53,29 @@ permalink: /north-carolina
       <li>Pine Knoll Shores</li>
     </td>
     <td></td>
-  <tr>
+  </tr>
   <tr>
     <td>Craven</td>
     <td>
       <li>Countywide</li>
     </td>
     <td></td>
-  <tr>
+  </tr>
   <tr>
     <td>Currituck</td>
     <td><li>Outer Banks</li></td>
     <td></td>
-  <tr>
+  </tr>
   <tr>
     <td>Dare</td>
     <td><li>Countywide including Hatteras</li></td>
     <td></td>
-  <tr>
+  </tr>
   <tr>
     <td>Duplin</td>
     <td><li>Countywide</li></td>
     <td></td>
-  <tr>
+  </tr>
   <tr>
     <td>Hyde</td>
     <td>
@@ -83,14 +83,14 @@ permalink: /north-carolina
       <li>Ocracoke Island</li>
     </td>
     <td></td>
-  <tr>
+  </tr>
   <tr>
     <td>Jones</td>
     <td>
       <li>Effective 2 p.m. Sept. 11 - All towns and unincorporated areas of the County.</li>
     </td>
     <td></td>
-  <tr>
+  </tr>
   <tr>
     <td>New Hanover</td>
     <td>
@@ -101,7 +101,7 @@ permalink: /north-carolina
     <td>
       <li>Countywide including UNCW</li>
     </td>
-  <tr>
+  </tr>
   <tr>
     <td>Onslow</td>
     <td>
@@ -110,14 +110,14 @@ permalink: /north-carolina
     <td>
       <li>Unincorporated areas of the County</li>
     </td>
-  <tr>
+  </tr>
   <tr>
     <td>Pamlico</td>
     <td>
       <li>Countywide</li>
     </td>
     <td></td>
-  <tr>
+  </tr>
   <tr>
     <td>Pender</td>
     <td>
@@ -128,14 +128,14 @@ permalink: /north-carolina
       <li>Those who live in manufactured or substandard housing</li>
     </td>
     <td></td>
-  <tr>
+  </tr>
   <tr>
     <td>Tyrrell</td>
     <td>
       <li>Countywide</li>
     </td>
     <td></td>
-  <tr>
+  </tr>
 </tbody>
 </table>
 
