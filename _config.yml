@@ -30,7 +30,7 @@ collections:
   states:
     output: true
 
-  
+mapbox_access_token: pk.eyJ1Ijoic2JtYTQ0IiwiYSI6ImNqbTB1bGFhNjBmMmwzcW9iZjlnaXFvdzIifQ.yTacIggcE99yYxVKIX7vIQ
 
 
 # Build settings
