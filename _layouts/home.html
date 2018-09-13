@@ -2,6 +2,15 @@
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
 	<head>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125718262-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125718262-1');
+</script>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,15 +22,7 @@
 		<link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.github.url | prepend: site.url }}">
 		<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.github.url | prepend: site.url }}">
 	</head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125718262-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'UA-125718262-1');
-</script>
 	<body>
 		<nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
 			<div class="container">
@@ -45,8 +46,9 @@
 				</div>
 		</nav>
 		<div class="level has-background-danger is-size-4">
-			<div class="level-item has-text-centered has-text-light">	
-						Text your zipcode to&#160;<a class="has-text-grey-lighter" href="sms:8035004835"> 1-803-500-4835 </a>&#160; for local shelter information.
+			<div class="level-item has-text-centered has-text-light">
+				Text your zipcode to&#160;<a class="has-text-grey-lighter" href="sms:8035004835"> 1-803-500-4835 </a>&#160; for
+				local shelter information.
 			</div>
 		</div>
 		<section class="hero-home is-light is-bold">
@@ -66,34 +68,34 @@
 						State Resources
 					</h2>
 					<div class="columns">
-							{% for state in site.states %}
-								<div class="column">
-									<a class="button is-large is-info" href="{{ site.url }}{{ state.permalink }}">
-									{{ state.name }}
-									</a>
-								</div>	
-							{% endfor %}
-					</div>	
+						{% for state in site.states %}
+						<div class="column">
+							<a class="button is-large is-info" href="{{ site.url }}{{ state.permalink }}">
+								{{ state.name }}
+							</a>
+						</div>
+						{% endfor %}
+					</div>
 				</div>
-				
+
 			</section>
 			<section class="section">
-					<div class="container is-fluid">
-							<h2 class="title is-2">RESOURCE LINKS</h2>
-							<h3 class="title is-3">DO YOU NEED HELP?</h3>
-							<div class="columns">
-								{% assign pages_list = site.pages %}
-								{% for node in pages_list %}
-								{% if node.title != null %}
-								{% if node.layout == "page" %}
-								<div class="column">
-									<a class="button is-large is-info" href="{{ node.url }}">{{ node.title }}</a>
-								</div>
-								{% endif %}
-								{% endif %}
-								{% endfor %}
-							</div>
+				<div class="container is-fluid">
+					<h2 class="title is-2">RESOURCE LINKS</h2>
+					<h3 class="title is-3">DO YOU NEED HELP?</h3>
+					<div class="columns">
+						{% assign pages_list = site.pages %}
+						{% for node in pages_list %}
+						{% if node.title != null %}
+						{% if node.layout == "page" %}
+						<div class="column">
+							<a class="button is-large is-info" href="{{ node.url }}">{{ node.title }}</a>
 						</div>
+						{% endif %}
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
 
 			</section>
 		</main>
@@ -116,8 +118,9 @@
 					To participate in data collection, curation, or any other help, please join us - <a href="https://bit.ly/2N6YVYD">C4A
 						Florence Volunteers</a>.
 				</p>
-        <img src="{{site.baseurl}}/assets/images/CEDR_logo.jpg" width="163" />
-        <p>Thank you to the <a href="https://cedrdigitalcorps.org/" target="_blank">CEDR Digital Corps</a> for collaborating on data collection.</p>
+				<img src="{{site.baseurl}}/assets/images/CEDR_logo.jpg" width="163" />
+				<p>Thank you to the <a href="https://cedrdigitalcorps.org/" target="_blank">CEDR Digital Corps</a> for
+					collaborating on data collection.</p>
 			</div>
 		</footer>
 	</body>
