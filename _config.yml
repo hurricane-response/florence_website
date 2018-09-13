@@ -30,7 +30,12 @@ collections:
   states:
     output: true
 
-  
+# Site settings
+# txtbot number - what triggers the bot, word, zipcode, etc
+txtbot_trigger: Florence
+# txtbot display - i.e. 1-800-555-1212 vs 18005551212
+textbot_display: 898211
+
 
 
 # Build settings
