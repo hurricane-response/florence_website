@@ -8,85 +8,23 @@ permalink: /north-carolina
 
 ### Evacuations
 
-**Beaufort**
- - Mandatory Evacuation
-    - all low-lying and flood-prone areas includes all areas adjacent to waterways
- - Voluntary Evacuation
-    - Entire County 
-    - 
-**Bertie**
- - Voluntary Evacutation
-    - Low lying areas and the Waterfront
+| County         | Mandatory Evacuation | Voluntary Evacuation |
+| :------------- | :------------------- | :------------------- |
+| Beaufort       | <li>All low-lying and flood-prone areas includes all areas adjacent to waterways | <li>Entire County |
+| Bertie         |                      | <li>Low lying areas and the Waterfront                    |
+| Brunswick      | <li>Low lying areas and Sub-Standard housing<li>Holden Beach (Visitors)<li>Oak Island (Visitors)                    | <li>Holden Beach (Residents)<li>Oak Island (Residents)<li>Navassa                  |
+| Carteret       | <li>Atlantic Beach<li>Emerald Isle<li>Indian Beach<li>Pine Knoll Shores                    |                     |
+| Craven         | <li>Countywide       |                      |
+| Currituck      | <li>Outer Banks      |                      |
+| Dare           | <li>Countywide including Hatteras           |                     |
+| Duplin         | <li>Countywide              |                     |
+| Hyde           | <li>Countywide Mainland<li>Ocracoke Island                     |                      |
+| Jones          | <li>Effective 2 p.m. Sept. 11 - All towns and unincorporated areas of the County.                    |                      |
+| New Hanover    | <li>Carolina Beach<li>Kure Beach<li>Wrightsville Beach | <li>Countywide including UNCW                     |
+| Onslow         | <li>Topsail               | <li>Unincorporated areas of the County                     |
+| Pamlico        | <li>Countywide                     |                      |
+| Pender         | <li>Topsail<li>Low-lying, flood prone areas, including the along the Intracoastal Waterway<li>Northeast Cape Fear River<li>Black River<li>Those who live in manufactured or substandard housing                     |                      |
+| Tyrrell        | <li>Countywide                     |                       ||
 
-**Brunswick**
- - Mandatory Evacuation
-    - Low lying areas and Sub-Standard housing
-    - Holden Beach (Visitors)
-    - Oak Island (Visitors)
-    -  Unincorporated areas
- - Voluntary Evacuation
-    - Holden Beach (Residents)
-    - Oak Island (Residents)
-    - Navassa
 
-**Carteret**
- - Mandatory Evacuation for 
-    - Atlantic Beach
-    - Emerald Isle
-    - Indian Beach
-    - Pine Knoll Shores
-
-**Craven**
- - Mandatory Evacuation
-    - Countywide
-
-**Currituck**
- - Mandatory Evacuation
-    - Outer Banks
-
-**Dare**
- - Mandatory Evacuation
-    - Countywide including Hatteras
-
-**Duplin**
- - Voluntary Evacuation
-    - Countywide
-
-**Hyde**
- - Mandatory Evacuation
-    - Countywide Mainland
-    - Ocracoke Island
-
-**Jones**
- - Mandatory Evacuation
-    - effective 2 p.m. Sept. 11 - All towns and unincorporated areas of the County.
-
-**New Hanover**
-- Mandatory Evacuation
-    - Carolina Beach
-    - Kure Beach
-    - Wrightsville Beach
- - Voluntary Evacuation
-    - Countywide including UNCW
-
-**Onslow**
- - Mandatory Evacuation
-    - Topsail
- - Voluntary Evacuation
-    - Unincorporated areas of the County
-
-**Pamlico**
-- Mandatory Evacuation
-    - Countywide
-
-**Pender**
- - Mandatory Evacuation
-    - Topsail
-    - low-lying, flood prone areas, including the along the Intracoastal Waterway
-    - Northeast Cape Fear River
-    - Black River
-    - those who live in manufactured or substandard housing
-
-**Tyrrell**
-- Mandatory Evacuation
-    - Countywide
+**Source:** [NC DPS: Hurricane Florence 2018](https://www.ncdps.gov/florence)
