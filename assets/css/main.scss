@@ -24,6 +24,7 @@ main {
   text-align: center;
 }
 
-.halp-map {
-  min-height: 80vh;
+hero.is-large .hero-body, .is-large.hero-home .hero-body {
+  padding-bottom: 3rem;
+  padding-top: 3rem;
 }
