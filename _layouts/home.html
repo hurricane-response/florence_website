@@ -38,15 +38,12 @@
 						</a>
 					</div>
 					<div class="navbar-end">
-						<a class="navbar-item" href="https://github.com/hurricane-response/florence_website">
-							GitHub
-						</a>
 					</div>
 				</div>
 		</nav>
 		<div class="level has-background-danger is-size-4">
 				<div class="level-item has-text-centered has-text-light">
-					Text your zipcode to&#160;<a class="has-text-light" href="sms:8035004835"> 1-803-500-4835 </a>&#160; for
+					Text your zipcode to&#160;<a class="has-text-grey-lighter" href="sms:8035004835"> 1-803-500-4835 </a>&#160; for
 					local shelter information.
 				</div>
 			</div>
@@ -71,7 +68,7 @@
 					<div class="columns">
 						{% for state in site.states %}
 						<div class="column">
-							<a class="button is-large has-background-link has-background-link has-text-white" href="{{ site.url }}{{ state.permalink }}">
+							<a class="button is-large is-info" href="{{ site.url }}{{ state.permalink }}">
 								{{ state.name }}
 							</a>
 						</div>
@@ -90,7 +87,7 @@
 						{% if node.title != null %}
 						{% if node.layout == "page" %}
 						<div class="column">
-							<a class="button is-large has-background-link has-background-link has-text-white" href="{{ node.url }}">{{ node.title }}</a>
+							<a class="button is-large is-info" href="{{ node.url }}">{{ node.title }}</a>
 						</div>
 						{% endif %}
 						{% endif %}
@@ -100,27 +97,27 @@
 
 			</section>
 		</main>
-		<section class="hero has-background-grey-lighter is-small">
+		<section class="hero is-primary is-small">
 			<div class="hero-body">
-				<div class="container has-text-light has-text-centered">
-					<h3 class="title has-text-black-ter is-3">
+				<div class="container has-text-centered">
+					<h3 class="title is-3">
 						See Something Missing?
 					</h3>
-					<p class="subtitle is-4 has-text-black-bis">To add more resources to these lists, please submit them here.</p>
+					<p>To add more resources to these lists, please submit them here.</p>
 					<p><a class="button is-light" href="https://github.com/hurricane-response/florence_website">GitHub repo</a></p>
 				</div>
 			</div>
 		</section>
-		<footer class="footer " role="contentinfo">
+		<footer class="footer" role="contentinfo">
 			<div class="container has-text-centered">
 				<h3 class="title is-3">What is this?</h3>
-				<p>This site is built by <a class="has-text-link" href="https://codeforamerica.org">Code for America</a> brigades from across the
+				<p>This site is built by <a href="https://codeforamerica.org">Code for America</a> brigades from across the
 					country.
-					To participate in data collection, curation, or any other help, please join us - <a class="has-text-link" href="https://bit.ly/2N6YVYD">C4A
+					To participate in data collection, curation, or any other help, please join us - <a href="https://bit.ly/2N6YVYD">C4A
 						Florence Volunteers</a>.
 				</p>
-				<img alt="CEDR Dital Corp logo" src="{{site.baseurl}}/assets/images/CEDR_logo.jpg" width="163" />
-				<p>Thank you to the <a class="has-text-link" href="https://cedrdigitalcorps.org/"  target="_blank">CEDR Digital Corps</a> for
+				<img src="{{site.baseurl}}/assets/images/CEDR_logo.jpg" width="163" />
+				<p>Thank you to the <a href="https://cedrdigitalcorps.org/" target="_blank">CEDR Digital Corps</a> for
 					collaborating on data collection.</p>
 			</div>
 		</footer>
