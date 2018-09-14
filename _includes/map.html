@@ -1,7 +1,8 @@
             <div id="map-container">
                 <div id="map"><a id="geolocate" href="#" rel="Geolocation by Richard Schumann from the Noun Project" title="geolocate yourself"></a></div>
                 <div id="legend"><div id="swatch"></div>Evacuation route</div>
-                <div id="filters">
+                <div id="filters" class="field">
+                    <div class="control">
                     <span><input type="radio" name="filter" value="all" checked="checked">&nbsp;All</span>
                     <span><input type="radio" name="filter" value="24">&nbsp;Updated &lt; 24 hrs ago</span>
                     <!-- <span><input type="radio" name="filter" value="people">&nbsp;Accepting people</span> -->
@@ -9,6 +10,7 @@
                     <span><input type="radio" name="filter" value="volunteers">&nbsp;Needs volunteers</span>
                     <span><input type="radio" name="filter" value="supplies">&nbsp;Needs supplies</span>
                     <span><input type="radio" name="filter" value="special">&nbsp;Special needs</span>
+                    </div>
                 </div>
                 <script>
                     window.shelters = null;
