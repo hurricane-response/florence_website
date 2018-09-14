@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Evacuation & Evac Prep
+title: Evacuation Prep
 permalink: /evacuation-prep/
 ---
 
