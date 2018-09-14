@@ -2,6 +2,8 @@
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
     <head>
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
         <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125718262-1"></script>
 <script>
@@ -20,7 +22,6 @@
         <link rel="stylesheet" href="{{site.baseurl}}/assets/css/main.css">
         <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.github.url | prepend: site.url }}">
         <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.github.url | prepend: site.url }}">
-        {% seo %}
     </head>
     <body>
         <nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
@@ -35,7 +36,7 @@
                         </a>
                 </div>
                 <div class="navbar-menu is-active">
-                    <div class="navbar-start">           
+                    <div class="navbar-start">
                     </div>
                     <div class="navbar-end">
                     </div>
@@ -43,11 +44,7 @@
         </nav>
         <main class="map" role="main">
             <div class="container">
-                <iframe id="googlemap" 
-                title="Florence Shelters"
-                width="100%"
-                height="800px"
-                src="https://florenceshelters.com/" frameborder="0" allow="geolocation"></iframe>
+                {% include map.html %}
             </div>
         </main>
         <section class="hero is-primary is-small">
@@ -74,5 +71,6 @@
 					collaborating on data collection.</p>
 			</div>
 		</footer>
-	</body>
+
+    </body>
 </html>
