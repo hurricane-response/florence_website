@@ -65,11 +65,13 @@
                             var phone = shelters[i].cleanPhone.trim();
                             if (((/[^\d]/.test(phone)) || (phone.replace(/0+/g, '').length === 0)) && shelters[i].phone)
                                 phone = shelters[i].phone.replace(/[^\d]/g, '');
+                            if (phone.replace(/[\-\+\(\)\s0]+/g, '').length === 0)
+                                phone = false;
                             var note = shelters[i].notes;
                             var petNote = shelters[i].pets_notes;
                             var html = '<h2>' + shelters[i].shelter + '</h2>';
                             if (shelters[i].address) html += '<div class="address">' + shelters[i].address + '</div>';
-                            if (phone) html += '<a class="phone" href="tel:' + phone + '">' + shelters[i].phone + '</a>';
+                            if (phone) html += '<a class="phone" href="tel:' + phone + '">' + phone + '</a>';
                             if (shelters[i].address) html += '<a class="directions" target="_blank" href="https://www.google.com/maps/dir/current+location/' + encodeURIComponent(shelters[i].address) + '">Directions</a>';
                             if (note) html += '<div class="note">' + note + '</div>';
                             if (petNote) html += '<div class="petNote">Pets: ' + petNote + '</div>';
