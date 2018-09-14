@@ -20,6 +20,7 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://www.florenceresponse.org" # the base hostname & protocol for your site, e.g. http://example.com
 
+
 permalink: pretty
 # twitter_username: jekyllrb
 # github_username:  jekyll
@@ -29,6 +30,8 @@ repository: hurricane-response/florence_website
 collections:
   states:
     output: true
+
+logo: assets/images/og_img.jpg
 
 # Site settings
 # txtbot number - what triggers the bot, word, zipcode, etc
@@ -44,7 +47,7 @@ textbot_display: 898211
 markdown: kramdown
 # theme: minima
 plugins:
-
+- jekyll-seo-tag
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
