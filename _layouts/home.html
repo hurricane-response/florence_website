@@ -62,25 +62,8 @@
 		<main role="main">
 			<section class="section">
 				<div class="container is-fluid">
-					<h2 class="title is-2">
-						State Resources
-					</h2>
-					<div class="columns">
-						{% for state in site.states %}
-						<div class="column">
-							<a class="button is-large is-info" href="{{ site.url }}{{ state.permalink }}">
-								{{ state.name }}
-							</a>
-						</div>
-						{% endfor %}
-					</div>
-				</div>
-
-			</section>
-			<section class="section">
-				<div class="container is-fluid">
-					<h2 class="title is-2">RESOURCE LINKS</h2>
-					<h3 class="title is-3">DO YOU NEED HELP?</h3>
+					<h2 class="title is-2">Resource Links</h2>
+					<h3 class="title is-3">Do You Need Help?</h3>
 					<div class="columns">
 						{% assign pages_list = site.pages %}
 						{% for node in pages_list %}
@@ -91,6 +74,32 @@
 						</div>
 						{% endif %}
 						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</section>
+			<section class="section">
+				<div class="container">
+					<div class="box">
+						<p class="content has-text-centered">
+							<a class="has-text-weight-bold is-size-3" href="https://www.fema.gov/florence-rumors">Hurricane Florence Rumor Control
+							</a> 
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="section">
+				<div class="container is-fluid">
+					<h2 class="title is-2">
+						State Resources
+					</h2>
+					<div class="columns">
+						{% for state in site.states %}
+						<div class="column">
+							<a class="button is-large is-info" href="{{ site.url }}{{ state.permalink }}">
+								{{ state.name }}
+							</a>
+						</div>
 						{% endfor %}
 					</div>
 				</div>
