@@ -53,7 +53,7 @@ Small Business Administration (SBA) provides low-interest disaster loans to busi
 P: 800.659.2955
 Emergency Food
 
-There are food pantries located throughout Florida distributing food to those who are having difficulties purchasing food. To locate your closest food pantry, please dial 2-1-1.
+There are food pantries located the area distributing food to those who are having difficulties purchasing food. To locate your closest food pantry, please dial 2-1-1.
 
 ## FEMA
 
