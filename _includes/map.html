@@ -27,8 +27,9 @@
             
             var html = '<header><p class="is-size-4 has-text-centered">' + pods[i].facility_name + '</p></header><div class="pod-details"><div class="content is-size-6 has-text-left">';
             if (pods[i].address) html += '<div class="address">' + pods[i].address + '</div>';
+            if (note) html += '<p class="note">Note:</br>' + note + '</p>';
             if (pods[i].address) html += '<a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/' + encodeURIComponent(pods[i].address) + '">Directions</a>';
-            if (note) html += '<div class="note">' + note + '</div>';
+            
             html += '</div></div>';
             var popup = new mapboxgl.Popup({ offset: 25 })
                 .setHTML(html);
