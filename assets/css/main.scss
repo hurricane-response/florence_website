@@ -39,20 +39,20 @@ hero.is-large .hero-body, .is-large.hero-home .hero-body {
   position: absolute;
   top: 2.5em;
   left: 1em;
-  height: 10em;
+  height: 30em;
+  width: 25%;
   z-index: 5;
   background-color: #fff;
   padding: 5px;
   border: 1px solid #999;
   padding: 1em;
   opacity: .9;
+  .buttons {
+    padding-top: 2em;
+  }
  }
 
- .map-info {
-    .buttons {
-      padding-top: 2em;
-    }
- }
+ 
 
  
 
@@ -68,4 +68,17 @@ hero.is-large .hero-body, .is-large.hero-home .hero-body {
 
 #map-container #map .marker.filtered {
   opacity: 0.3;
+}
+
+.mapboxgl-popup-content {
+  @extend .box;
+  padding: 1em;
+}
+
+.pod-details {
+  padding: 1em 0;
+}
+
+.directions {
+  margin-top: 1em;
 }
