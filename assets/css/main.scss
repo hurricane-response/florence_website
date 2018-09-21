@@ -4,7 +4,7 @@
 @charset "utf-8";
 @import "variables";
 @import "bulma";
-@import "checkradio";
+@import "extensions/checkradio";
 
 main {
   margin: 3em 0;
@@ -40,7 +40,7 @@ hero.is-large .hero-body, .is-large.hero-home .hero-body {
   position: absolute;
   top: 2.5em;
   left: 1em;
-  height: 12em;
+  height: 26em;
   width: 25%;
   z-index: 5;
   background-color: #fff;
@@ -81,6 +81,10 @@ hero.is-large .hero-body, .is-large.hero-home .hero-body {
 }
 
 .directions {
+  margin-top: 1em;
+}
+
+.filters {
   margin-top: 1em;
 }
 

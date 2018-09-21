@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+    <head>
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125718262-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125718262-1');
+</script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+        <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+        <link rel="stylesheet" href="{{site.baseurl}}/assets/css/main.css">
+        <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.github.url | prepend: site.url }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.github.url | prepend: site.url }}">
+        {% seo %}
+    </head>
+    <body>
+        <nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="{{site.baseurl}}">
+                        <img src="{{site.baseurl}}/assets/images/brigade_sm.png" alt="Code for America Hurricane Florence Response"
+                            width="78" height="28">
+                    </a>
+                    <a class="navbar-item" href="{{site.url}}">
+                            Home
+                        </a>
+                </div>
+                <div class="navbar-menu is-active">
+                    <div class="navbar-start">
+                    </div>
+                    <div class="navbar-end">
+                    </div>
+                </div>
+        </nav>
+        <main class="map" role="main">
+            <div class="container">
+                {% include shelter_map.html %}
+            </div>
+        </main>
+        <section class="hero is-primary is-small">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <h3 class="title is-3">
+                        See Something Missing?
+                    </h3>
+                    <p>To add more resources to these lists, please submit them here.</p>
+                    <p><a class="button is-light" href="https://github.com/hurricane-response/florence_website">GitHub repo</a></p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer " role="contentinfo">
+			<div class="container has-text-centered">
+				<h3 class="title is-3">What is this?</h3>
+				<p>This site is built by <a class="has-text-link" href="https://codeforamerica.org">Code for America</a> brigades from across the
+					country.
+					To participate in data collection, curation, or any other help, please join us - <a class="has-text-link" href="https://bit.ly/2N6YVYD">C4A
+						Florence Volunteers</a>.
+				</p>
+				<img alt="CEDR Dital Corp logo" src="{{site.baseurl}}/assets/images/CEDR_logo.jpg" width="163" />
+				<div class="partners columns">
+				<p class="column has-text-centered">Thank you to the <a href="https://mapbox.com" target="_blank">Mapbox</a> team for
+					collaborating on mapping tools.<br/>
+					<img src="{{site.baseurl}}/assets/images/mapbox_logo.png">
+					</p>
+				<p class="column has-text-centered">Thank you to the <a href="https://cedrdigitalcorps.org/" target="_blank">CEDR Digital Corps</a> for
+					collaborating on data collection.<br/>
+					<img src="{{site.baseurl}}/assets/images/CEDR_logo.jpg" width="163" />
+					</p>
+					
+				</div>
+			</div>
+		</footer>
+
+    </body>
+</html>

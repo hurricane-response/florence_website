@@ -2,7 +2,7 @@ $checkbox-radius: $radius !default
 $checkbox-border: .1rem solid $grey-lighter !default
 $checkbox-block-background: $white-ter !default
 $checkradio-focus: 1px dotted $grey-light !default
-$checkradio-top-offset: 0rem !default
+$checkradio-top-offset: 0 !default
 
 =checkbox-size($size)
   $newSize: $size * 1.5
@@ -76,8 +76,6 @@ $checkradio-top-offset: 0rem !default
     margin: .5em
     padding: .2rem .5rem .2rem 0
     border-radius: $checkbox-radius
-    &:first-of-type
-      margin-left: 0
 
     &:hover
       &::before,
