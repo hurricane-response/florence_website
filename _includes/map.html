@@ -7,7 +7,7 @@
         
     </div>
     <script>
-               
+
     mapboxgl.accessToken = '{{site.mapbox_access_token}}';
     var map = new mapboxgl.Map({
         container: 'map',
@@ -25,13 +25,16 @@
             el.className = 'marker';
             var note = pods[i].notes;
             
-            var html = '<header><p class="is-size-4 has-text-centered">' + pods[i].facility_name + '</p></header><div class="pod-details"><div class="content is-size-6 has-text-left">';
+            var html = '<header class="popup-header"><p class="is-size-4 has-text-centered">' + pods[i].facility_name + '</p></header><div class="pod-details"><div class="content is-size-6 has-text-left">';
             if (pods[i].address) html += '<div class="address">' + pods[i].address + '</div>';
             if (note) html += '<p class="note">Note:</br>' + note + '</p>';
             if (pods[i].address) html += '<a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/' + encodeURIComponent(pods[i].address) + '">Directions</a>';
             
             html += '</div></div>';
-            var popup = new mapboxgl.Popup({ offset: 25 })
+            var popup = new mapboxgl.Popup({
+                offset: 25,
+                className: 'pod-popup'
+            })
                 .setHTML(html);
             pods[i].marker = new mapboxgl.Marker(el)
                 .setLngLat([pods[i].longitude, pods[i].latitude])

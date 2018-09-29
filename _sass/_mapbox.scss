@@ -1,0 +1,30 @@
+/**
+Popup
+ */
+$header-background-color: #1b5856;
+$header-font-color: white;
+
+.mapboxgl-popup-close-button {
+  padding: 5px;
+  color: grey;
+  font-size: 2em;
+}
+
+.pod-popup > .mapboxgl-popup-content {
+  padding: 0;
+}
+
+.pod-popup .popup-header {
+  color: $header-font-color;
+  padding: 3em;
+  background: $header-background-color;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: $header-background-color;
+}
+
+.pod-popup .pod-details {
+  padding: 3em 1em 1em 1em;
+
+}
