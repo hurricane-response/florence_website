@@ -3,7 +3,6 @@
  */
 
 .mapboxgl-popup-close-button {
-  padding: 5px;
   color: $popup-close-button--color;
   font-size: 2em;
 }
@@ -18,7 +17,9 @@
   background: $blue;
 }
 
-.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
   border-bottom-color: $blue;
 }
 
@@ -32,6 +33,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  padding-bottom: 12px;
 
   svg {
     margin-right: 15px;
