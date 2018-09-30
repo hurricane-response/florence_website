@@ -1,12 +1,10 @@
 /**
-Popup
+  Popup
  */
-$header-background-color: #1b5856;
-$header-font-color: white;
 
 .mapboxgl-popup-close-button {
   padding: 5px;
-  color: grey;
+  color: $popup-close-button--color;
   font-size: 2em;
 }
 
@@ -15,13 +13,13 @@ $header-font-color: white;
 }
 
 .pod-popup .popup-header {
-  color: $header-font-color;
+  color: $popup-header-font--color;
   padding: 3em;
-  background: $header-background-color;
+  background: $blue;
 }
 
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
-  border-bottom-color: $header-background-color;
+  border-bottom-color: $blue;
 }
 
 .pod-popup .pod-details {
@@ -41,7 +39,7 @@ $header-font-color: white;
 }
 
 .controls a .separator {
-  border-right: 1px solid white;
+  border-right: $popup-control-separator;
   height: 32px;
   margin-right: 13px;
 }
@@ -70,10 +68,10 @@ $header-font-color: white;
 }
 
 /**
- ICONS
+  ICONS
 */
 
 #icon-directions {
-  fill: white;
+  fill: $popup-icon--fill;
   margin-right: 15px;
 }
