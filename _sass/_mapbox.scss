@@ -28,3 +28,52 @@ $header-font-color: white;
   padding: 3em 1em 1em 1em;
 
 }
+
+.address {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  svg {
+    margin-right: 15px;
+  }
+}
+
+.controls a .separator {
+  border-right: 1px solid white;
+  height: 32px;
+  margin-right: 13px;
+}
+
+.note {
+  margin-top: 1.5em;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 16px 0 16px 0;
+}
+
+.note-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 32px;
+
+  svg {
+    margin-right: 15px;
+  }
+
+  label {
+    font-weight: 700;
+  }
+}
+
+/**
+ ICONS
+*/
+
+#icon-directions {
+  fill: white;
+  margin-right: 15px;
+}

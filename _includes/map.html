@@ -7,7 +7,6 @@
         
     </div>
     <script>
-
     mapboxgl.accessToken = '{{site.mapbox_access_token}}';
     var map = new mapboxgl.Map({
         container: 'map',
@@ -23,18 +22,20 @@
         for(var i = 0; i < pods.length; i++) {
             var el = document.createElement('div');
             el.className = 'marker';
-            var note = pods[i].notes;
-            
-            var html = '<header class="popup-header"><p class="is-size-4 has-text-centered">' + pods[i].facility_name + '</p></header><div class="pod-details"><div class="content is-size-6 has-text-left">';
-            if (pods[i].address) html += '<div class="address">' + pods[i].address + '</div>';
-            if (note) html += '<p class="note">Note:</br>' + note + '</p>';
-            if (pods[i].address) html += '<a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/' + encodeURIComponent(pods[i].address) + '">Directions</a>';
-            
-            html += '</div></div>';
+            // var note = pods[i].notes;
+            //
+            // var html = '<header class="popup-header"><p class="is-size-4 has-text-centered">' + pods[i].facility_name + '</p></header><div class="pod-details"><div class="content is-size-6 has-text-left">';
+            // if (pods[i].address) html += '<div class="address">' + pods[i].address + '</div>';
+            // if (note) html += '<p class="note">Note:</br>' + note + '</p>';
+            // if (pods[i].address) html += '<a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/' + encodeURIComponent(pods[i].address) + '">Directions</a>';
+            //
+            // html += '</div></div>';
+            var html = popupTemplate(pods[i]);
             var popup = new mapboxgl.Popup({
                 offset: 25,
                 className: 'pod-popup'
             })
+                // .setHTML(html);
                 .setHTML(html);
             pods[i].marker = new mapboxgl.Marker(el)
                 .setLngLat([pods[i].longitude, pods[i].latitude])
@@ -61,5 +62,52 @@
             return false;
         }
     }
+
+    function popupTemplate(pod) {
+        const address = `
+            <div class="address">
+                <svg id="icon-address" height="32px" viewBox="0 0 32 32" aria-label="address icon">
+                    <path d="M0 32h16v-32h-16v32zM10 4h4v4h-4v-4zM10 12h4v4h-4v-4zM10 20h4v4h-4v-4zM2 4h4v4h-4v-4zM2 12h4v4h-4v-4zM2 20h4v4h-4v-4zM18 10h14v2h-14zM18 32h4v-8h6v8h4v-18h-14z"></path>
+                </svg>
+                <div class="address-details" aria-label="address details">
+                    ${pod.address}
+                </div>
+            </div>
+        `;
+        const note = `
+            <div class="note">
+                <label><strong>Note:</strong></label>
+                <div class="note-details" aria-label="Notes for pod distribution point">
+                    ${pod.notes}
+                </div>
+            </div>
+        `;
+        return `
+            <header class="popup-header">
+                <p class="is-size-4 has-text-centered">${pod.facility_name}</p>
+            </header>
+            <div class="pod-details">
+                <div class="content is-size-6 has-text-left">
+                    ${!!pod.address ? address : ``}
+                    ${!!pod.notes ? note : ``}
+                    <div class="controls">
+                        ${!!pod.address ? `
+                            <a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/${encodeURIComponent(pod.address)}" aria-label="Get directions button">
+                                <svg id="icon-directions" height="100%" viewBox="0 0 32 32" aria-label="directions icon">
+                                    <path d="M17 32c-0.072 0-0.144-0.008-0.217-0.024-0.458-0.102-0.783-0.507-0.783-0.976v-15h-15c-0.469 0-0.875-0.326-0.976-0.783s0.129-0.925 0.553-1.123l30-14c0.381-0.178 0.833-0.098 1.13 0.199s0.377 0.749 0.199 1.13l-14 30c-0.167 0.358-0.524 0.577-0.906 0.577zM5.508 14h11.492c0.552 0 1 0.448 1 1v11.492l10.931-23.423-23.423 10.931z"></path>
+                                </svg>
+                                <div class="separator"></div>
+                                <label>Directions</label>
+                            </a>
+                        ` : ``}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
     </script>
+
+
+
+
 </div>
