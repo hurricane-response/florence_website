@@ -3,123 +3,252 @@
     </div>
     <div class="map-info">
         <h2 class="subtitle is-4">Find Nearby Shelters</h2>
-        <a id="geolocate" class="button is-fullwidth is-info is-large" href="#" rel="Geolocation by Richard Schumann from the Noun Project" title="geolocate yourself">Find my Location</a>
+        <a id="geolocate" class="button is-fullwidth is-info is-large" href="#"
+           rel="Geolocation by Richard Schumann from the Noun Project" title="geolocate yourself">Find my Location</a>
         <div id="filters" class="filters">
-          <div class="field">
-            <input class="is-checkradio is-info" id="all-shelters" type="radio" name="filter" value="all" checked="checked">
-            <label for="all-shelters">All</label>
-          </div>
-          <div class="field">
-            <input class="is-checkradio is-info" id="recent-update" type="radio" name="filter" value="24">
-            <label for="recent-update">Recently Updated</label>
-          </div>
-          <div class="field">
-            <input class="is-checkradio is-info" id="pets" type="radio" name="filter" value="pets">
-            <label for="pets">Pets allowed</label>
-          </div>
-          <div class="field">
-            <input class="is-checkradio is-info" id="volunteers" type="radio" name="filter" value="volunteers">
-            <label for="volunteers">Volunteers Needed</label>
-          </div>
-          <div class="field">
-            <input class="is-checkradio is-info" id="supplies" type="radio" name="filter" value="supplies">
-            <label for="supplies">Supplies Needed</label>
-          </div>
-          <div class="field">
-            <input class="is-checkradio is-info" id="special" type="radio" name="filter" value="special">
-            <label for="special">Special Needs</label>
-          </div>        
+            <div class="field">
+                <input class="is-checkradio is-info" id="all-shelters" type="radio" name="filter" value="all"
+                       checked="checked">
+                <label for="all-shelters">All</label>
+            </div>
+            <div class="field">
+                <input class="is-checkradio is-info" id="recent-update" type="radio" name="filter" value="24">
+                <label for="recent-update">Recently Updated</label>
+            </div>
+            <div class="field">
+                <input class="is-checkradio is-info" id="pets" type="radio" name="filter" value="pets">
+                <label for="pets">Pets allowed</label>
+            </div>
+            <div class="field">
+                <input class="is-checkradio is-info" id="volunteers" type="radio" name="filter" value="volunteers">
+                <label for="volunteers">Volunteers Needed</label>
+            </div>
+            <div class="field">
+                <input class="is-checkradio is-info" id="supplies" type="radio" name="filter" value="supplies">
+                <label for="supplies">Supplies Needed</label>
+            </div>
+            <div class="field">
+                <input class="is-checkradio is-info" id="special" type="radio" name="filter" value="special">
+                <label for="special">Special Needs</label>
+            </div>
+        </div>
+        <script>
+            window.shelters = null;
+
+            function setFilter() {
+                if (!window.shelters) return;
+                var filterValue;
+                var filters = document.getElementsByName('filter');
+                for (var i = 0; i < filters.length; i++) {
+                    if (filters[i].checked)
+                        filterValue = filters[i].value;
+                }
+                var active = false;
+                window.shelters.forEach(function (s) {
+                    if (filterValue === 'all')
+                        active = true;
+                    else if (filterValue === '24')
+                        active = ((+new Date()) - (+new Date(s.last_updated))) < (24 * 60 * 60 * 1000);
+                    else if (filterValue === 'people')
+                        active = s.accepting;
+                    else if (filterValue === 'pets')
+                        active = s.pets;
+                    else if (filterValue === 'volunteers')
+                        active = s.needs.map(function (x) {
+                            return x.toLowerCase();
+                        }).indexOf('volunteers') !== -1;
+                    else if (filterValue === 'supplies')
+                        active = s.needs.map(function (x) {
+                            return x.toLowerCase();
+                        }).indexOf('supplies') !== -1;
+                    else if (filterValue === 'special')
+                        active = s.special_needs;
+                    var el = s.marker.getElement();
+                    if (el && el.className) {
+                        if (active)
+                            el.className = el.className.split(/\s+/).filter(function (x) {
+                                return x !== 'filtered';
+                            }).join(' ');
+                        else
+                            el.className = Object.keys(el.className.split(/\s+/).reduce(function (prev, cur) {
+                                prev[cur] = true;
+                                return prev;
+                            }, {filtered: true})).join(' ');
+                    }
+                });
+            }
+
+            mapboxgl.accessToken = '{{site.mapbox_access_token}}';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/sbma44/cjm0qon9e7u8l2sqliotzrlmi',
+                center: [-78, 35.5],
+                zoom: 6.1
+            });
+            var oReq = new XMLHttpRequest();
+            oReq.onload = function (e) {
+                if (!(e && e.target && e.target.response && e.target.response.shelters))
+                    return console.log('error fetching shelter JSON');
+                window.shelters = e.target.response.shelters;
+                for (var i = 0; i < shelters.length; i++) {
+                    var el = document.createElement('div');
+                    el.className = 'marker';
+                    // var phone = shelters[i].cleanPhone.trim();
+                    // if (((/[^\d]/.test(phone)) || (phone.replace(/0+/g, '').length === 0)) && shelters[i].phone)
+                    //     phone = shelters[i].phone.replace(/[^\d]/g, '');
+                    // if (phone.replace(/[\-\+\(\)\s0]+/g, '').length === 0)
+                    //     phone = false;
+                    // var note = shelters[i].notes;
+                    // var petNote = shelters[i].pets_notes;
+                    // var html = '<h2>' + shelters[i].shelter + '</h2>';
+                    // if (shelters[i].address) html += '<div class="address">' + shelters[i].address + '</div>';
+                    // if (phone) html += '<a class="phone" href="tel:' + phone + '">' + phone + '</a>';
+                    // if (shelters[i].address) html += '<a class="directions" target="_blank" href="https://www.google.com/maps/dir/current+location/' + encodeURIComponent(shelters[i].address) + '">Directions</a>';
+                    // if (note) html += '<div class="note">' + note + '</div>';
+                    // if (petNote) html += '<div class="petNote">Pets: ' + petNote + '</div>';
+                    var popup = new mapboxgl.Popup({
+                        offset: 25,
+                        className: 'shelter-popup'
+                    }).setHTML(popupTemplate(shelters[i]));
+                    shelters[i].marker = new mapboxgl.Marker(el)
+                        .setLngLat([shelters[i].longitude, shelters[i].latitude])
+                        .setPopup(popup)
+                        .addTo(map);
+                }
+
+                // todo
+                console.log('SHELTERS: ', shelters);
+
+            };
+            oReq.open('GET', 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters', true);
+            oReq.responseType = 'json';
+            oReq.send();
+            var filterRadios = document.getElementsByName('filter');
+            for (var i = 0; i < filterRadios.length; i++)
+                filterRadios[i].onclick = setFilter;
+            var geolocate = document.getElementById('geolocate');
+            if (!navigator.geolocation || !geolocate) {
+                geolocate.style.display = 'none';
+            }
+            else {
+                geolocate.onclick = function (e) {
+                    navigator.geolocation.getCurrentPosition(function (pos) {
+                        map.flyTo({center: [pos.coords.longitude, pos.coords.latitude], zoom: 11});
+                    });
+                    return false;
+                }
+            }
+            var navControl = new mapboxgl.NavigationControl();
+            map.addControl(navControl, 'top-right');
+
+
+            /**
+             * Popup Template
+             */
+
+            function popupTemplate(shelter) {
+
+                const phoneLink = `
+                    <div class="phone">
+                        <a class="phone" href="tel:${shelter.cleanPhone}">${shelter.phone}</a>
+                    </div>
+                `;
+
+                const address = `
+                        <div class="address">
+                            <svg id="icon-address" height="32px" viewBox="0 0 32 32" aria-label="address icon">
+                                <path d="M0 32h16v-32h-16v32zM10 4h4v4h-4v-4zM10 12h4v4h-4v-4zM10 20h4v4h-4v-4zM2 4h4v4h-4v-4zM2 12h4v4h-4v-4zM2 20h4v4h-4v-4zM18 10h14v2h-14zM18 32h4v-8h6v8h4v-18h-14z"></path>
+                            </svg>
+                            <div class="address-details" aria-label="address details">
+                                ${isFullAddress(shelter) ? shelter.address : shelterAddressToString(shelter)}
+                            </div>
+                        </div>
+                    `;
+
+                const note = `
+                    <div class="note">
+                        <label><strong>Note:</strong></label>
+                        <div class="note-details" aria-label="Notes for shelter distribution point">
+                            ${shelter.notes}
+                        </div>
+                    </div>
+                `;
+
+                const petsNote = `
+                    <div class="note">
+                        <label><strong>Pets:</strong></label>
+                        <div class="note-details" aria-label="Notes for shelter distribution point">
+                            ${shelter.pets_notes}
+                        </div>
+                    </div>
+                `;
+
+                return `
+                    <header class="popup-header">
+                        <p class="is-size-4 has-text-centered">${shelter.shelter}</p>
+                    </header>
+                    <div class="shelter-details">
+                        <div class="content is-size-6 has-text-left">
+                            ${!!shelter.address ? address : ``}
+                            ${isPhone(shelter) ? phoneLink : ``}
+                            ${!!shelter.notes ? note : ``}
+                            ${!!shelter.pets_notes ? petsNote : ``}
+                            <div class="controls">
+                                ${!!shelter.address
+                                ? `
+                                    <a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/${encodeURIComponent(shelterAddressToString(shelter))}" aria-label="Get directions button">
+                                        <svg id="icon-directions" height="100%" viewBox="0 0 32 32" aria-label="directions icon">
+                                            <path d="M17 32c-0.072 0-0.144-0.008-0.217-0.024-0.458-0.102-0.783-0.507-0.783-0.976v-15h-15c-0.469 0-0.875-0.326-0.976-0.783s0.129-0.925 0.553-1.123l30-14c0.381-0.178 0.833-0.098 1.13 0.199s0.377 0.749 0.199 1.13l-14 30c-0.167 0.358-0.524 0.577-0.906 0.577zM5.508 14h11.492c0.552 0 1 0.448 1 1v11.492l10.931-23.423-23.423 10.931z"></path>
+                                        </svg>
+                                        <div class="separator"></div>
+                                        <label>Directions</label>
+                                    </a>
+                                `
+                                : ``}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+
+            /**
+             * Joins the different address segments into a string,
+             * if state has no value it will just join the zipcode after the city
+             * @param shelter
+             * @returns {string}
+             */
+            function shelterAddressToString(shelter) {
+                return [(shelter.address | ''), (shelter.city | ''), (shelter.state | '') + ' ' + (shelter.zip | '')].join(', ');
+            }
+
+            /**
+             * Checks if address has "," to signify that it contains more than just the street number.
+             * @param shelter
+             * @returns {boolean}
+             */
+            function isFullAddress(shelter) {
+                if (!shelter.address){
+                    console.log('No Address', shelter);
+                    return false;
+                }
+                return shelter.address.split(',').length > 1;
+            }
+
+            /**
+             * Verifies there is a phone number received that is not "0000000000"
+             * @param shelter
+             * @returns {boolean}
+             */
+            function isPhone(shelter) {
+                let phone = shelter.cleanPhone.trim();
+
+                if (((/[^\d]/.test(phone)) || (phone.replace(/0+/g, '').length === 0)) && shelter.phone) {
+                    phone = shelter.phone.replace(/[^\d]/g, '');
+                } else {
+                    return false;
+                }
+                return phone.replace(/[\-\+\(\)\s0]+/g, '').length !== 0;
+            }
+        </script>
     </div>
-    <script>
-                      window.shelters = null;
-                      function setFilter() {
-                          if (!window.shelters) return;
-                          var filterValue;
-                          var filters = document.getElementsByName('filter');
-                          for (var i = 0; i < filters.length; i++) {
-                              if (filters[i].checked)
-                                  filterValue = filters[i].value;
-                          }
-                          var active = false;
-                          window.shelters.forEach(function(s) {
-                              if (filterValue === 'all')
-                                  active = true;
-                              else if(filterValue === '24')
-                                  active = ((+new Date()) - (+new Date(s.last_updated))) < (24 * 60 * 60 * 1000);
-                              else if(filterValue === 'people')
-                                  active = s.accepting;
-                              else if(filterValue === 'pets')
-                                  active = s.pets;
-                              else if(filterValue === 'volunteers')
-                                  active = s.needs.map(function(x) { return x.toLowerCase(); }).indexOf('volunteers') !== -1;
-                              else if(filterValue === 'supplies')
-                                  active = s.needs.map(function(x) { return x.toLowerCase(); }).indexOf('supplies') !== -1;
-                              else if(filterValue === 'special')
-                                  active = s.special_needs;
-                              var el = s.marker.getElement();
-                              if (el && el.className) {
-                                  if (active)
-                                      el.className = el.className.split(/\s+/).filter(function(x) { return x !== 'filtered'; }).join(' ');
-                                  else
-                                      el.className = Object.keys(el.className.split(/\s+/).reduce(function(prev, cur) { prev[cur] = true; return prev; }, { filtered: true })).join(' ');
-                              }
-                          });
-                      }
-                      mapboxgl.accessToken = '{{site.mapbox_access_token}}';
-                      var map = new mapboxgl.Map({
-                          container: 'map',
-                          style: 'mapbox://styles/sbma44/cjm0qon9e7u8l2sqliotzrlmi',
-                          center: [-78, 35.5],
-                          zoom: 6.1
-                      });
-                      var oReq = new XMLHttpRequest();
-                      oReq.onload = function (e) {
-                          if (!(e && e.target && e.target.response && e.target.response.shelters))
-                              return console.log('error fetching shelter JSON');
-                          window.shelters = e.target.response.shelters;
-                          for(var i = 0; i < shelters.length; i++) {
-                              var el = document.createElement('div');
-                              el.className = 'marker';
-                              var phone = shelters[i].cleanPhone.trim();
-                              if (((/[^\d]/.test(phone)) || (phone.replace(/0+/g, '').length === 0)) && shelters[i].phone)
-                                  phone = shelters[i].phone.replace(/[^\d]/g, '');
-                              if (phone.replace(/[\-\+\(\)\s0]+/g, '').length === 0)
-                                  phone = false;
-                              var note = shelters[i].notes;
-                              var petNote = shelters[i].pets_notes;
-                              var html = '<h2>' + shelters[i].shelter + '</h2>';
-                              if (shelters[i].address) html += '<div class="address">' + shelters[i].address + '</div>';
-                              if (phone) html += '<a class="phone" href="tel:' + phone + '">' + phone + '</a>';
-                              if (shelters[i].address) html += '<a class="directions" target="_blank" href="https://www.google.com/maps/dir/current+location/' + encodeURIComponent(shelters[i].address) + '">Directions</a>';
-                              if (note) html += '<div class="note">' + note + '</div>';
-                              if (petNote) html += '<div class="petNote">Pets: ' + petNote + '</div>';
-                              var popup = new mapboxgl.Popup({ offset: 25 })
-                                  .setHTML(html);
-                              shelters[i].marker = new mapboxgl.Marker(el)
-                                  .setLngLat([shelters[i].longitude, shelters[i].latitude])
-                                  .setPopup(popup)
-                                  .addTo(map);
-                          }
-                      };
-                      oReq.open('GET', 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters', true);
-                      oReq.responseType = 'json';
-                      oReq.send();
-                      var filterRadios = document.getElementsByName('filter');
-                      for(var i = 0; i< filterRadios.length; i++)
-                          filterRadios[i].onclick = setFilter;
-                      var geolocate = document.getElementById('geolocate');
-                      if (!navigator.geolocation || !geolocate) {
-                          geolocate.style.display = 'none';
-                      }
-                      else {
-                          geolocate.onclick = function(e) {
-                              navigator.geolocation.getCurrentPosition(function(pos) {
-                                  map.flyTo({ center: [pos.coords.longitude, pos.coords.latitude], zoom: 11});
-                              });
-                              return false;
-                          }
-                      }
-                      var navControl = new mapboxgl.NavigationControl();
-                      map.addControl(navControl, 'top-right');
-                  </script>
-</div>
