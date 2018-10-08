@@ -126,8 +126,6 @@
     var navControl = new mapboxgl.NavigationControl();
     map.addControl(navControl, 'top-right');
 
-
-
     /**
      * Builds a HTML template from a shelter object.
      * @params shelter
@@ -136,66 +134,66 @@
     function popupTemplate(shelter) {
 
         const phoneLink = `
-                    <div class="phone">
-                        <a class="phone" href="tel:${shelter.cleanPhone}">${shelter.phone}</a>
-                    </div>
-                `;
+            <div class="phone">
+                <a class="phone" href="tel:${shelter.cleanPhone}">${shelter.phone}</a>
+            </div>
+        `;
 
         const address = `
-                        <div class="address">
-                            <svg id="icon-address" height="32px" viewBox="0 0 32 32" aria-label="address icon">
-                                <path d="M0 32h16v-32h-16v32zM10 4h4v4h-4v-4zM10 12h4v4h-4v-4zM10 20h4v4h-4v-4zM2 4h4v4h-4v-4zM2 12h4v4h-4v-4zM2 20h4v4h-4v-4zM18 10h14v2h-14zM18 32h4v-8h6v8h4v-18h-14z"></path>
-                            </svg>
-                            <div class="address-details" aria-label="address details">
-                                ${isFullAddress(shelter) ? shelter.address : shelterAddressToString(shelter)}
-                            </div>
-                        </div>
-                    `;
+            <div class="address">
+                <svg id="icon-address" height="32px" viewBox="0 0 32 32" aria-label="address icon">
+                    <path d="M0 32h16v-32h-16v32zM10 4h4v4h-4v-4zM10 12h4v4h-4v-4zM10 20h4v4h-4v-4zM2 4h4v4h-4v-4zM2 12h4v4h-4v-4zM2 20h4v4h-4v-4zM18 10h14v2h-14zM18 32h4v-8h6v8h4v-18h-14z"></path>
+                </svg>
+                <div class="address-details" aria-label="address details">
+                    ${isFullAddress(shelter) ? shelter.address : shelterAddressToString(shelter)}
+                </div>
+            </div>
+        `;
 
         const note = `
-                    <div class="note">
-                        <label><strong>Note:</strong></label>
-                        <div class="note-details" aria-label="Notes for shelter distribution point">
-                            ${shelter.notes}
-                        </div>
-                    </div>
-                `;
+            <div class="note">
+                <label><strong>Note:</strong></label>
+                <div class="note-details" aria-label="Notes for shelter distribution point">
+                    ${shelter.notes}
+                </div>
+            </div>
+        `;
 
         const petsNote = `
-                    <div class="note">
-                        <label><strong>Pets:</strong></label>
-                        <div class="note-details" aria-label="Notes for shelter distribution point">
-                            ${shelter.pets_notes}
-                        </div>
-                    </div>
-                `;
+            <div class="note">
+                <label><strong>Pets:</strong></label>
+                <div class="note-details" aria-label="Notes for shelter distribution point">
+                    ${shelter.pets_notes}
+                </div>
+            </div>
+        `;
 
         return `
-                    <header class="popup-header">
-                        <p class="is-size-4 has-text-centered">${shelter.shelter}</p>
-                    </header>
-                    <div class="shelter-details">
-                        <div class="content is-size-6 has-text-left">
-                            ${!!shelter.address ? address : ``}
-                            ${isPhone(shelter) ? phoneLink : ``}
-                            ${!!shelter.notes ? note : ``}
-                            ${!!shelter.pets_notes ? petsNote : ``}
-                            <div class="controls">
-                                ${!!shelter.address
-            ? `
-                                    <a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/${encodeURIComponent(shelterAddressToString(shelter))}" aria-label="Get directions button">
-                                        <svg id="icon-directions" height="100%" viewBox="0 0 32 32" aria-label="directions icon">
-                                            <path d="M17 32c-0.072 0-0.144-0.008-0.217-0.024-0.458-0.102-0.783-0.507-0.783-0.976v-15h-15c-0.469 0-0.875-0.326-0.976-0.783s0.129-0.925 0.553-1.123l30-14c0.381-0.178 0.833-0.098 1.13 0.199s0.377 0.749 0.199 1.13l-14 30c-0.167 0.358-0.524 0.577-0.906 0.577zM5.508 14h11.492c0.552 0 1 0.448 1 1v11.492l10.931-23.423-23.423 10.931z"></path>
-                                        </svg>
-                                        <div class="separator"></div>
-                                        <label>Directions</label>
-                                    </a>
-                                `
-            : ``}
-                            </div>
-                        </div>
+            <header class="popup-header">
+                <p class="is-size-4 has-text-centered">${shelter.shelter}</p>
+            </header>
+            <div class="shelter-details">
+                <div class="content is-size-6 has-text-left">
+                    ${!!shelter.address ? address : ``}
+                    ${isPhone(shelter) ? phoneLink : ``}
+                    ${!!shelter.notes ? note : ``}
+                    ${!!shelter.pets_notes ? petsNote : ``}
+                    <div class="controls">
+                        ${!!shelter.address
+                        ? `
+                            <a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/${encodeURIComponent(shelterAddressToString(shelter))}" aria-label="Get directions button">
+                                <svg id="icon-directions" height="100%" viewBox="0 0 32 32" aria-label="directions icon">
+                                    <path d="M17 32c-0.072 0-0.144-0.008-0.217-0.024-0.458-0.102-0.783-0.507-0.783-0.976v-15h-15c-0.469 0-0.875-0.326-0.976-0.783s0.129-0.925 0.553-1.123l30-14c0.381-0.178 0.833-0.098 1.13 0.199s0.377 0.749 0.199 1.13l-14 30c-0.167 0.358-0.524 0.577-0.906 0.577zM5.508 14h11.492c0.552 0 1 0.448 1 1v11.492l10.931-23.423-23.423 10.931z"></path>
+                                </svg>
+                                <div class="separator"></div>
+                                <label>Directions</label>
+                            </a>
+                        `
+                        : ``}
                     </div>
-                `;
+                </div>
+            </div>
+        `;
     }
 
 
