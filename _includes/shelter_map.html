@@ -159,7 +159,7 @@
             <div class="note">
                 <label><strong>Note:</strong></label>
                 <div class="note-details" aria-label="Notes for shelter distribution point">
-                    ${parseURLToAnchors(shelter.notes)}
+                    ${urlsToAnchors(shelter.notes)}
                 </div>
             </div>
         `;
@@ -168,7 +168,7 @@
             <div class="note">
                 <label><strong>Pets:</strong></label>
                 <div class="note-details" aria-label="Notes for shelter distribution point">
-                    ${shelter.pets_notes}
+                    ${urlsToAnchors(shelter.pets_notes)}
                 </div>
             </div>
         `;
@@ -221,14 +221,36 @@
         ].join(', ');
     }
 
-    function parseURLToAnchors(content) {
-        const linkRegExpPattern = /(?:(?:https?|http|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
-        const foundLinks = linkRegExpPattern.exec(content);
-        if (!foundLinks) {
+    /**
+     * replaces URLs in a string with anchor elements
+     *
+     * @param content {string}
+     * @returns {string}
+     */
+    function urlsToAnchors(content) {
+        if (!content) {
+            return void 0;
+        }
+        const urlMatchPattern = /(?:(?:https?):\/\/|www\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
+        const urls = content.match(urlMatchPattern);
+
+        if (!urls) {
             return content;
         }
-        console.log('found links', foundLinks.length);
+
+        urls.forEach(url => {
+            content = content.replace(url, transformToAnchor(url));
+        });
         return content;
+
+        /**
+         * replaces url with an html anchor
+         * @param url
+         * @returns {string}
+         */
+        function transformToAnchor(url) {
+            return `<a href="${url}">${url}</a>`
+        }
 
     }
 
