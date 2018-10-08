@@ -40,6 +40,13 @@
   }
 }
 
+.address-details {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
 .controls a .separator {
   border-right: $popup-control-separator;
   height: 32px;

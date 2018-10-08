@@ -1,5 +1,15 @@
+
+.shelter-popup > .mapboxgl-popup-content {
+  padding: 0;
+}
+
 .shelter-popup .popup-header {
   color: $popup-header-font--color;
   padding: 3em;
   background: $blue;
+}
+
+
+.shelter-popup .shelter-details {
+  padding: 3em 1em 1em 1em;
 }

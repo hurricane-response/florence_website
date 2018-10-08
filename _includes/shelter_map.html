@@ -116,9 +116,11 @@
                         .addTo(map);
                 }
 
-                // todo
-                console.log('SHELTERS: ', shelters);
-
+                shelters.forEach(res => {
+                    if (res.shelter.match('Warren County High School')) {
+                        console.log(res);
+                    }
+                })
             };
             oReq.open('GET', 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters', true);
             oReq.responseType = 'json';
@@ -221,7 +223,14 @@
              * @returns {string}
              */
             function shelterAddressToString(shelter) {
-                return [(shelter.address | ''), (shelter.city | ''), (shelter.state | '') + ' ' + (shelter.zip | '')].join(', ');
+
+                return [
+                    shelter.address,
+                    shelter.city,
+                    shelter.state
+                        + ' '
+                        + shelter.zip
+                ].join(', ');
             }
 
             /**
