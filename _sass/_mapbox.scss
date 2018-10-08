@@ -1,0 +1,79 @@
+/**
+  Popup
+ */
+
+.mapboxgl-popup-close-button {
+  color: $popup-close-button--color;
+  font-size: 2em;
+}
+
+.pod-popup > .mapboxgl-popup-content {
+  padding: 0;
+}
+
+.pod-popup .popup-header {
+  color: $popup-header-font--color;
+  padding: 3em;
+  background: $blue;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+  border-bottom-color: $blue;
+}
+
+.pod-popup .pod-details {
+  padding: 3em 1em 1em 1em;
+
+}
+
+.address {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 12px;
+
+  svg {
+    margin-right: 15px;
+  }
+}
+
+.controls a .separator {
+  border-right: $popup-control-separator;
+  height: 32px;
+  margin-right: 13px;
+}
+
+.note {
+  margin-top: 1.5em;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 16px 0 16px 0;
+}
+
+.note-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 32px;
+
+  svg {
+    margin-right: 15px;
+  }
+
+  label {
+    font-weight: 700;
+  }
+}
+
+/**
+  ICONS
+*/
+
+#icon-directions {
+  fill: $popup-icon--fill;
+  margin-right: 15px;
+}
