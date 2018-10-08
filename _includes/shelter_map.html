@@ -93,19 +93,6 @@
                 for (var i = 0; i < shelters.length; i++) {
                     var el = document.createElement('div');
                     el.className = 'marker';
-                    // var phone = shelters[i].cleanPhone.trim();
-                    // if (((/[^\d]/.test(phone)) || (phone.replace(/0+/g, '').length === 0)) && shelters[i].phone)
-                    //     phone = shelters[i].phone.replace(/[^\d]/g, '');
-                    // if (phone.replace(/[\-\+\(\)\s0]+/g, '').length === 0)
-                    //     phone = false;
-                    // var note = shelters[i].notes;
-                    // var petNote = shelters[i].pets_notes;
-                    // var html = '<h2>' + shelters[i].shelter + '</h2>';
-                    // if (shelters[i].address) html += '<div class="address">' + shelters[i].address + '</div>';
-                    // if (phone) html += '<a class="phone" href="tel:' + phone + '">' + phone + '</a>';
-                    // if (shelters[i].address) html += '<a class="directions" target="_blank" href="https://www.google.com/maps/dir/current+location/' + encodeURIComponent(shelters[i].address) + '">Directions</a>';
-                    // if (note) html += '<div class="note">' + note + '</div>';
-                    // if (petNote) html += '<div class="petNote">Pets: ' + petNote + '</div>';
                     var popup = new mapboxgl.Popup({
                         offset: 25,
                         className: 'shelter-popup'
@@ -115,12 +102,6 @@
                         .setPopup(popup)
                         .addTo(map);
                 }
-
-                shelters.forEach(res => {
-                    if (res.shelter.match('Warren County High School')) {
-                        console.log(res);
-                    }
-                })
             };
             oReq.open('GET', 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters', true);
             oReq.responseType = 'json';
@@ -144,10 +125,12 @@
             map.addControl(navControl, 'top-right');
 
 
-            /**
-             * Popup Template
-             */
 
+            /**
+             * Builds a HTML template from a shelter object.
+             * @params shelter
+             * @returns {string}
+             */
             function popupTemplate(shelter) {
 
                 const phoneLink = `
@@ -242,7 +225,6 @@
              */
             function isFullAddress(shelter) {
                 if (!shelter.address){
-                    console.log('No Address', shelter);
                     return false;
                 }
                 return shelter.address.split(',').length > 1;
