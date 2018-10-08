@@ -28,7 +28,7 @@
 
 }
 
-.address {
+.address, .phone {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -40,7 +40,7 @@
   }
 }
 
-.address-details {
+.address-details, .phone-details {
   display: flex;
   justify-content: flex-start;
   align-items: center;
