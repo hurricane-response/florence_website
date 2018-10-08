@@ -135,11 +135,11 @@
 
         const phoneLink = `
             <div class="phone">
-                <svg id="icon-phone" height="32px" viewBox="0 0 32 32">
+                <svg id="icon-phone" height="32px" viewBox="0 0 32 32" aria-label="phone icon">
                     <path d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"></path>
                 </svg>
-                <div class="phone-details">
-                    <a class="phone" href="tel:${shelter.cleanPhone}">${shelter.phone}</a>
+                <div class="phone-details" aria-label="shelter phone number">
+                    <a class="phone" role="link" href="tel:${shelter.cleanPhone}">${shelter.phone}</a>
                 </div>
             </div>
         `;
@@ -158,7 +158,7 @@
         const note = `
             <div class="note">
                 <label><strong>Note:</strong></label>
-                <div class="note-details" aria-label="Notes for shelter distribution point">
+                <div class="note-details" aria-label="Notes for shelter">
                     ${urlsToAnchors(shelter.notes)}
                 </div>
             </div>
@@ -167,7 +167,7 @@
         const petsNote = `
             <div class="note">
                 <label><strong>Pets:</strong></label>
-                <div class="note-details" aria-label="Notes for shelter distribution point">
+                <div class="note-details" aria-label="Notes for shelter pets policy">
                     ${urlsToAnchors(shelter.pets_notes)}
                 </div>
             </div>
@@ -249,7 +249,7 @@
          * @returns {string}
          */
         function transformToAnchor(url) {
-            return `<a href="${url}">${url}</a>`
+            return `<a role="link" href="${url}">${url}</a>`
         }
 
     }
@@ -265,6 +265,7 @@
         if (!shelter.address){
             return false;
         }
+
         return shelter.address.split(',').length > 1;
     }
 
