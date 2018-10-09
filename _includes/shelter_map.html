@@ -1,37 +1,19 @@
-<div id="map-container">
+<div id="map-container" class="shelter-map_container">
     <div id="map">
     </div>
-    <div class="map-info">
-        <h2 class="subtitle is-4">Find Nearby Shelters</h2>
-        <a id="geolocate" class="button is-fullwidth is-info is-large" href="#"
-           rel="Geolocation by Richard Schumann from the Noun Project" title="geolocate yourself">Find my Location</a>
-        <div id="filters" class="filters">
-            <div class="field">
-                <input class="is-checkradio is-info" id="all-shelters" type="radio" name="filter" value="all"
-                       checked="checked">
-                <label for="all-shelters">All</label>
-            </div>
-            <div class="field">
-                <input class="is-checkradio is-info" id="recent-update" type="radio" name="filter" value="24">
-                <label for="recent-update">Recently Updated</label>
-            </div>
-            <div class="field">
-                <input class="is-checkradio is-info" id="pets" type="radio" name="filter" value="pets">
-                <label for="pets">Pets allowed</label>
-            </div>
-            <div class="field">
-                <input class="is-checkradio is-info" id="volunteers" type="radio" name="filter" value="volunteers">
-                <label for="volunteers">Volunteers Needed</label>
-            </div>
-            <div class="field">
-                <input class="is-checkradio is-info" id="supplies" type="radio" name="filter" value="supplies">
-                <label for="supplies">Supplies Needed</label>
-            </div>
-            <div class="field">
-                <input class="is-checkradio is-info" id="special" type="radio" name="filter" value="special">
-                <label for="special">Special Needs</label>
-            </div>
+    <div class="shelter-map_info">
+        <div class="map-controls">
+            <button id="geolocate" class="button is-info is-small"  rel="Geolocation by Richard Schumann from the Noun Project" title="geolocate yourself">Shelters Nearby</button>
+            <button id="ShelterFilterToggle" class="button is-info is-small" onclick="toggleFiltersVisibility();">Shelter Filters</button>
         </div>
+        <ul id="ShelterFiltersUL" class="filters tabs">
+            <li class="filter-item" id="ShelterFilterAll" onclick="onFilterClick('ShelterFilterAll')">All</li>
+            <li class="filter-item" id="ShelterFilterRecentlyUpdated" onclick="onFilterClick('ShelterFilterRecentlyUpdated')">Recently Updated</li>
+            <li class="filter-item" id="ShelterFilterPetsAllowed" onclick="onFilterClick('ShelterFilterPetsAllowed')">Pets allowed</li>
+            <li class="filter-item" id="ShelterFilterVolunteersNeeded" onclick="onFilterClick('ShelterFilterVolunteersNeeded')">Volunteers Needed</li>
+            <li class="filter-item" id="ShelterFilterSuppliesNeeded" onclick="onFilterClick('ShelterFilterSuppliesNeeded')">Supplies Needed</li>
+            <li class="filter-item" id="ShelterFilterSpecialNeeds" onclick="onFilterClick('ShelterFilterSpecialNeeds')">Special Needs</li>
+        </ul>
     </div>
 </div>
 <script>
@@ -249,7 +231,7 @@
          * @returns {string}
          */
         function transformToAnchor(url) {
-            return `<a role="link" href="${url}">${url}</a>`
+            return `<a role="link" href="${url}" target="_blank">${url}</a>`
         }
 
     }
@@ -282,5 +264,25 @@
         }
 
         return phone.replace(/[\-\+\(\)\s0]+/g, '').length !== 0;
+    }
+
+    function toggleFiltersVisibility() {
+        const filtersRef = document.getElementById('ShelterFiltersUL');
+
+        if (filtersRef.className.match('visible')) {
+            filtersRef.className = filtersRef.className.replace(' visible', '');
+        } else {
+            filtersRef.className = filtersRef.className.concat(' visible');
+        }
+    }
+
+    function onFilterClick(id) {
+        const filterButtonRef = document.getElementById(id);
+
+        if (filterButtonRef.className.match('active')) {
+            filterButtonRef.className = filterButtonRef.className.replace(' active', '');
+        } else {
+            filterButtonRef.className = filterButtonRef.className.concat(' active');
+        }
     }
 </script>
