@@ -13,25 +13,27 @@
             <li class="filter-item" id="ShelterFilter_PetsOK" onclick="onFilterClick(this.id)">Pets allowed</li>
             <li class="filter-item" id="ShelterFilter_SuppliesNeeded" onclick="onFilterClick(this.id)">Supplies Needed</li>
             <li class="filter-item" id="ShelterFilter_VolunteersNeeded" onclick="onFilterClick(this.id)">Volunteers Needed</li>
-            <li class="filter-item" id="ShelterFilter_RecentlyUpdated" onclick="onFilterClick(this.id)">Recently Updated</li>
+            <li class="filter-item" id="ShelterFilter_RecentlyUpdated" onclick="onFilterClick(this.id)">Recently Updated (Past 12 Hours)</li>
         </ul>
     </div>
 </div>
 <script>
     window.shelters = null;
+    const hours = (val) => 1000 * 60 * 60 * val;
     let sheltersShown = [];
     let currentFilterActions = [];
-    const ShelterAPI = 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters';
-    // const ShelterAPI = 'https://irma-api.herokuapp.com/api/v1/shelters';
 
-    const hours = (val) => 1000 * 60 * 60 * val;
+    const SHELTER_API = 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters';
+    // const SHELTER_API  = 'https://irma-api.herokuapp.com/api/v1/shelters';
+    const MAP_LOAD_CENTER = [-78, 35.5];
+    const RECENTLY_UPDATED_FILTER_LENGTH = hours(12);
 
     mapboxgl.accessToken = '{{site.mapbox_access_token}}';
 
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/sbma44/cjm0qon9e7u8l2sqliotzrlmi',
-        center: [-78, 35.5],
+        center: MAP_LOAD_CENTER,
         zoom: 6.1
     });
     var oReq = new XMLHttpRequest();
@@ -41,7 +43,7 @@
         window.shelters = sheltersShown = e.target.response.shelters;
         populateMarkers(sheltersShown);
     };
-    oReq.open('GET', ShelterAPI, true);
+    oReq.open('GET', SHELTER_API, true);
     oReq.responseType = 'json';
     oReq.send();
     var filterRadios = document.getElementsByName('filter');
@@ -330,7 +332,7 @@
                     // const updated = moment(shelter.updated_at).valueOf();
                     const now = dateFns.getTime(new Date());
                     const updated = dateFns.getTime(shelter.updated_at);
-                    return ( now - updated ) < hours(12);
+                    return ( now - updated ) < RECENTLY_UPDATED_FILTER_LENGTH;
                 });
             default:
                 console.error('Filter action not registered: ', action);
