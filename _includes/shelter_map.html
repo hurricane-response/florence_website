@@ -16,21 +16,17 @@
             <li class="filter-item" id="ShelterFilter_PetsOK" onclick="onFilterClick(this.id)">Pets allowed</li>
             <!--<li class="filter-item" id="ShelterFilter_SuppliesNeeded" onclick="onFilterClick(this.id)">Supplies Needed</li>-->
             <!--<li class="filter-item" id="ShelterFilter_VolunteersNeeded" onclick="onFilterClick(this.id)">Volunteers Needed</li>-->
-            <!--<li class="filter-item" id="ShelterFilter_RecentlyUpdated" onclick="onFilterClick(this.id)"><span>Recently Updated </span><span>(Past 12 Hours)</span></li>-->
         </ul>
     </div>
 </div>
 <script>
     window.shelters = null;
-    const hours = (val) => 1000 * 60 * 60 * val;
     let sheltersShown = [];
     let currentFilterActions = [];
-    let currentPosition = [];
 
     const SHELTER_API = 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters';
     // const SHELTER_API  = 'https://irma-api.herokuapp.com/api/v1/shelters';
     const MAP_LOAD_CENTER = [-82, 28];
-    const RECENTLY_UPDATED_FILTER_LENGTH = hours(12);
 
     mapboxgl.accessToken = '{{site.mapbox_access_token}}';
 
@@ -50,21 +46,6 @@
     oReq.open('GET', SHELTER_API, true);
     oReq.responseType = 'json';
     oReq.send();
-    // var filterRadios = document.getElementsByName('filter');
-    // for (var i = 0; i < filterRadios.length; i++)
-    //     filterRadios[i].onclick = setFilter;
-    // var geolocate = document.getElementById('geolocate');
-    // if (!navigator.geolocation || !geolocate) {
-    //     geolocate.style.display = 'none';
-    // }
-    // else {
-    //     geolocate.onclick = function (e) {
-    //         navigator.geolocation.getCurrentPosition(function (pos) {
-    //             map.flyTo({center: [pos.coords.longitude, pos.coords.latitude], zoom: 11});
-    //         });
-    //         return false;
-    //     }
-    // }
     var navControl = new mapboxgl.NavigationControl();
     map.addControl(navControl, 'top-right');
     map.addControl(new mapboxgl.GeolocateControl({
@@ -130,8 +111,6 @@
                 <div class="content is-size-6 has-text-left">
                     ${!!shelter.address ? address : ``}
                     ${isPhone(shelter) ? phoneLink : ``}
-                    ${!!shelter.notes ? note : ``}
-                    ${!!shelter.pets_notes ? petsNote : ``}
                     <div class="controls">
                         ${!!shelter.address
                         ? `
@@ -145,6 +124,8 @@
                         `
                         : ``}
                     </div>
+                    ${!!shelter.notes ? note : ``}
+                    ${!!shelter.pets_notes ? petsNote : ``}
                 </div>
             </div>
         `;
@@ -335,15 +316,6 @@
                 return current.filter(shelter => (!!shelter.supply_needs && shelter.supply_needs.length > 0)); // not sure how the data comes back
             case'VolunteersNeeded':
                 return current.filter(shelter => (!!shelter.volunteer_needs && shelter.volunteer_needs.length > 0)); // not sure how the data comes back
-            case'RecentlyUpdated':
-                // Its not, technically random... If you put the same time in, it should produce the same output. heh..  -Rex
-                return current.filter(shelter => {
-                    // const now = moment().valueOf();
-                    // const updated = moment(shelter.updated_at).valueOf();
-                    const now = dateFns.getTime(new Date());
-                    const updated = dateFns.getTime(shelter.updated_at);
-                    return ( now - updated ) < RECENTLY_UPDATED_FILTER_LENGTH;
-                });
             default:
                 console.error('Filter action not registered: ', action);
                 return current;
