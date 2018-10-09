@@ -19,12 +19,15 @@
 </div>
 <script>
     window.shelters = null;
+    var DateTime = luxon.DateTime;
+
     let sheltersShown = [];
     let currentFilterActions = [];
-    const DateTime = luxon.DateTime;
+
     const hours = (val) => 1000 * 60 * 60 * val;
 
     mapboxgl.accessToken = '{{site.mapbox_access_token}}';
+
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/sbma44/cjm0qon9e7u8l2sqliotzrlmi',
@@ -61,6 +64,7 @@
 
     /**
      * Builds a HTML template from a shelter object.
+     *
      * @params shelter
      * @returns {string}
      */
@@ -140,6 +144,7 @@
      *
      * Joins the different address segments into a string,
      * if state has no value it will just join the zipcode after the city
+     *
      * @param shelter
      * @returns {string}
      */
@@ -167,10 +172,9 @@
         const urlMatchPattern = /(?:(?:https?):\/\/|www\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
         const urls = content.match(urlMatchPattern);
 
-        if (!urls) {
+        if (!urls){
             return content;
         }
-
         urls.forEach(url => {
             content = content.replace(url, transformToAnchor(url));
         });
@@ -178,6 +182,7 @@
 
         /**
          * replaces url with an html anchor
+         *
          * @param url
          * @returns {string}
          */
@@ -191,6 +196,7 @@
      * https://github.com/hurricane-response/florence-api/issues/53
      *
      * Checks if address has "," to signify that it contains more than just the street number.
+     *
      * @param shelter
      * @returns {boolean}
      */
@@ -204,6 +210,7 @@
 
     /**
      * Verifies there is a phone number received that is not "0000000000"
+     *
      * @param shelter
      * @returns {boolean}
      */
@@ -270,7 +277,6 @@
 
         if (filterButtonRef.className.match('active') ) {
             currentFilterActions = currentFilterActions.filter(val => val !== action);
-
             if (!ifIsAll()) {
                 const nextSheltersShown = currentFilterActions.reduce((nextShown, action) => {
                     return nextShown = filterReducer(nextShown, action);
