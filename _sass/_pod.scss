@@ -1,0 +1,16 @@
+
+.pod-popup > .mapboxgl-popup-content {
+  padding: 0;
+}
+
+.pod-popup .popup-header {
+  color: $popup-header-font--color;
+  padding: 3em;
+  background: $blue;
+}
+
+
+.pod-popup .pod-details {
+  padding: 3em 1em 1em 1em;
+
+}
