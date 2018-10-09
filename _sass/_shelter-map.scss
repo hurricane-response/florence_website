@@ -1,0 +1,81 @@
+$map-height: 90vh;
+
+.shelter-popup > .mapboxgl-popup-content {
+  padding: 0;
+}
+
+.shelter-popup .popup-header {
+  color: $popup-header-font--color;
+  padding: 3em;
+  background: $blue;
+}
+
+.shelter-popup .shelter-details {
+  padding: 3em 1em 1em 1em;
+}
+
+
+.shelter-map_container {
+  position: relative;
+  max-height: $map-height;
+
+}
+
+#map-container.shelter-map_container #map {
+  min-height: $map-height;
+  max-height: $map-height;
+}
+
+.shelter-map_info {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 0;
+}
+
+// Filter Controls
+
+#ShelterFilterToggle, #geolocate {
+
+  &.active {
+    background: $blue;
+  }
+
+  svg {
+    height: 1em;
+    margin-right: 6px;
+    fill: white;
+  }
+}
+
+#ShelterFiltersUL {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  max-width: 50vw;
+  transform: translateX(-200%);
+  transition: all ease-in-out 0.4s;
+  li {
+    white-space: normal;
+    size: 0.7em;
+  }
+  li, li:focus {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all linear 0.2s;
+    margin-bottom: 5px;
+
+    &.active {
+      background: rgba(164, 228, 251, 1);
+      transform: scale(1.1);
+    }
+  }
+
+  &.visible {
+    transform: translateX(0);
+  }
+}
