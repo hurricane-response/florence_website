@@ -3,12 +3,6 @@
     </div>
     <div class="shelter-map_info">
         <div class="map-controls">
-            <button disabled id="geolocate" class="button is-info is-small"  rel="Geolocation by Richard Schumann from the Noun Project" title="geolocate yourself">
-                <svg id="icon-target" viewBox="0 0 32 32" aria-label="location icon">
-                    <path d="M32 14h-3.154c-0.864-5.57-5.276-9.982-10.846-10.846v-3.154h-4v3.154c-5.57 0.864-9.982 5.276-10.846 10.846h-3.154v4h3.154c0.864 5.57 5.276 9.982 10.846 10.846v3.154h4v-3.154c5.57-0.864 9.982-5.276 10.846-10.846h3.154v-4zM24.776 14h-3.118c-0.603-1.705-1.953-3.056-3.658-3.658v-3.118c3.36 0.765 6.010 3.416 6.776 6.776zM16 18c-1.105 0-2-0.895-2-2s0.895-2 2-2c1.105 0 2 0.895 2 2s-0.895 2-2 2zM14 7.224v3.118c-1.705 0.603-3.056 1.953-3.658 3.658h-3.118c0.765-3.36 3.416-6.010 6.776-6.776zM7.224 18h3.118c0.603 1.705 1.953 3.056 3.658 3.658v3.118c-3.36-0.765-6.010-3.416-6.776-6.776zM18 24.776v-3.118c1.705-0.603 3.056-1.953 3.658-3.658h3.118c-0.765 3.36-3.416 6.010-6.776 6.776z"></path>
-                </svg>
-                Nearby
-            </button>
             <button id="ShelterFilterToggle" class="button is-info is-small" onclick="toggleFiltersVisibility();">
                 <svg id="icon-filter" viewBox="0 0 32 32" aria-label="filter icon">
                     <path d="M16 0c-8.837 0-16 2.239-16 5v3l12 12v10c0 1.105 1.791 2 4 2s4-0.895 4-2v-10l12-12v-3c0-2.761-7.163-5-16-5zM2.95 4.338c0.748-0.427 1.799-0.832 3.040-1.171 2.748-0.752 6.303-1.167 10.011-1.167s7.262 0.414 10.011 1.167c1.241 0.34 2.292 0.745 3.040 1.171 0.494 0.281 0.76 0.519 0.884 0.662-0.124 0.142-0.391 0.38-0.884 0.662-0.748 0.427-1.8 0.832-3.040 1.171-2.748 0.752-6.303 1.167-10.011 1.167s-7.262-0.414-10.011-1.167c-1.24-0.34-2.292-0.745-3.040-1.171-0.494-0.282-0.76-0.519-0.884-0.662 0.124-0.142 0.391-0.38 0.884-0.662z"></path>
@@ -31,6 +25,7 @@
     const hours = (val) => 1000 * 60 * 60 * val;
     let sheltersShown = [];
     let currentFilterActions = [];
+    let currentPosition = [];
 
     const SHELTER_API = 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters';
     // const SHELTER_API  = 'https://irma-api.herokuapp.com/api/v1/shelters';
@@ -55,23 +50,29 @@
     oReq.open('GET', SHELTER_API, true);
     oReq.responseType = 'json';
     oReq.send();
-    var filterRadios = document.getElementsByName('filter');
-    for (var i = 0; i < filterRadios.length; i++)
-        filterRadios[i].onclick = setFilter;
-    var geolocate = document.getElementById('geolocate');
-    if (!navigator.geolocation || !geolocate) {
-        geolocate.style.display = 'none';
-    }
-    else {
-        geolocate.onclick = function (e) {
-            navigator.geolocation.getCurrentPosition(function (pos) {
-                map.flyTo({center: [pos.coords.longitude, pos.coords.latitude], zoom: 11});
-            });
-            return false;
-        }
-    }
+    // var filterRadios = document.getElementsByName('filter');
+    // for (var i = 0; i < filterRadios.length; i++)
+    //     filterRadios[i].onclick = setFilter;
+    // var geolocate = document.getElementById('geolocate');
+    // if (!navigator.geolocation || !geolocate) {
+    //     geolocate.style.display = 'none';
+    // }
+    // else {
+    //     geolocate.onclick = function (e) {
+    //         navigator.geolocation.getCurrentPosition(function (pos) {
+    //             map.flyTo({center: [pos.coords.longitude, pos.coords.latitude], zoom: 11});
+    //         });
+    //         return false;
+    //     }
+    // }
     var navControl = new mapboxgl.NavigationControl();
     map.addControl(navControl, 'top-right');
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true
+    }));
 
     /**
      * Builds a HTML template (Popup) from a shelter object.
@@ -250,10 +251,10 @@
             }
         });
         sheltersShown = sh3lters;
-        for (var i = 0; i < sheltersShown.length; i++) {
-            var el = document.createElement('div');
+        for (let i = 0; i < sheltersShown.length; i++) {
+            const el = document.createElement('div');
             el.className = 'marker';
-            var popup = new mapboxgl.Popup({
+            const popup = new mapboxgl.Popup({
                 offset: 25,
                 className: 'shelter-popup'
             }).setHTML(popupTemplate(sheltersShown[i]));
@@ -348,18 +349,4 @@
                 return current;
         }
     }
-    //
-    // function locateSheltersNearby() {
-    //     if (navigator) {
-    //         navigator.geolocation.getCurrentPosition(function(position) {
-    //                 console.log("i'm tracking you!");
-    //             },
-    //             function (error) {
-    //                 if (error.code == error.PERMISSION_DENIED)
-    //                     console.log("you denied me :-(");
-    //             });
-    //     } else {
-    //
-    //     }
-    // }
 </script>
