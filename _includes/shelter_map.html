@@ -21,6 +21,8 @@
     window.shelters = null;
     let sheltersShown = [];
     let currentFilterActions = [];
+    const ShelterAPI = 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters';
+    // const ShelterAPI = 'https://irma-api.herokuapp.com/api/v1/shelters';
 
     const hours = (val) => 1000 * 60 * 60 * val;
 
@@ -39,7 +41,7 @@
         window.shelters = sheltersShown = e.target.response.shelters;
         populateMarkers(sheltersShown);
     };
-    oReq.open('GET', 'https://irma-api.herokuapp.com/api/v1/shelters', true);
+    oReq.open('GET', ShelterAPI, true);
     oReq.responseType = 'json';
     oReq.send();
     var filterRadios = document.getElementsByName('filter');
@@ -61,7 +63,7 @@
     map.addControl(navControl, 'top-right');
 
     /**
-     * Builds a HTML template from a shelter object.
+     * Builds a HTML template (Popup) from a shelter object.
      *
      * @params shelter
      * @returns {string}
@@ -312,7 +314,7 @@
             case'All':
                 return shelters;
             case'SpecialNeeds':
-                return current.filter(shelter => shelter.special_needs === true);
+                return current.filter(shelter => (shelter.special_needs === true));
             case'PetsOK':
                 return current.filter(shelter => (shelter.pets && shelter.pets !== 'No' && shelter.pets !== false));
             case'Accepting':
@@ -324,14 +326,29 @@
             case'RecentlyUpdated':
                 // Its not, technically random... If you put the same time in, it should produce the same output. heh..  -Rex
                 return current.filter(shelter => {
-                    const now = moment().valueOf();
-                    const updated = moment(shelter.updated_at).valueOf();
-                    return ( now - updated) < hours(12);
+                    // const now = moment().valueOf();
+                    // const updated = moment(shelter.updated_at).valueOf();
+                    const now = dateFns.getTime(new Date());
+                    const updated = dateFns.getTime(shelter.updated_at);
+                    return ( now - updated ) < hours(12);
                 });
-
             default:
                 console.error('Filter action not registered: ', action);
                 return current;
         }
     }
+    //
+    // function locateSheltersNearby() {
+    //     if (navigator) {
+    //         navigator.geolocation.getCurrentPosition(function(position) {
+    //                 console.log("i'm tracking you!");
+    //             },
+    //             function (error) {
+    //                 if (error.code == error.PERMISSION_DENIED)
+    //                     console.log("you denied me :-(");
+    //             });
+    //     } else {
+    //
+    //     }
+    // }
 </script>
