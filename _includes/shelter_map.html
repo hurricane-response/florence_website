@@ -268,11 +268,15 @@
 
     function toggleFiltersVisibility() {
         const filtersRef = document.getElementById('ShelterFiltersUL');
+        const filtersButtonRef = document.getElementById('ShelterFilterToggle');
 
         if (filtersRef.className.match('visible')) {
             filtersRef.className = filtersRef.className.replace(' visible', '');
+            filtersButtonRef.className = filtersButtonRef.className.replace(' active', '');
+
         } else {
             filtersRef.className = filtersRef.className.concat(' visible');
+            filtersButtonRef.className = filtersButtonRef.className.concat(' active');
         }
     }
 

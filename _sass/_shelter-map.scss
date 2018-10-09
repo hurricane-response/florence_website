@@ -34,6 +34,13 @@ $map-height: 90vh;
 
 // Filter Controls
 
+#ShelterFilterToggle {
+
+  &.active {
+    background: $blue;
+  }
+}
+
 #ShelterFiltersUL {
   list-style: none;
   display: flex;
