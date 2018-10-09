@@ -19,8 +19,6 @@
 </div>
 <script>
     window.shelters = null;
-    var DateTime = luxon.DateTime;
-
     let sheltersShown = [];
     let currentFilterActions = [];
 
@@ -325,11 +323,12 @@
                 return current.filter(shelter => (!!shelter.volunteer_needs && shelter.volunteer_needs.length > 0)); // not sure how the data comes back
             case'RecentlyUpdated':
                 // Its not, technically random... If you put the same time in, it should produce the same output. heh..  -Rex
-                return current.filter(shelters => {
-                    const now = DateTime.local().ts;
-                    const updated = DateTime.fromISO(shelters.updated_at).ts;
-                    return (now - updated) < hours(12);
+                return current.filter(shelter => {
+                    const now = moment().valueOf();
+                    const updated = moment(shelter.updated_at).valueOf();
+                    return ( now - updated) < hours(12);
                 });
+
             default:
                 console.error('Filter action not registered: ', action);
                 return current;
