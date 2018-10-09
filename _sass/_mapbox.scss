@@ -8,8 +8,9 @@
 }
 
 .mapboxgl-popup-content {
+  width: 320px;
   max-width: 100vw;
-  max-height: 80vh;
+  max-height: 480px;
   overflow: auto;
 }
 
@@ -42,6 +43,10 @@
   border-right: $popup-control-separator;
   height: 32px;
   margin-right: 13px;
+}
+
+.controls {
+  border-top: rgba(0, 0, 0, 0.2) 1px solid;
 }
 
 .note {
