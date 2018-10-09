@@ -318,6 +318,7 @@
             case'VolunteersNeeded':
                 return current.filter(shelter => (!!shelter.volunteer_needs && shelter.volunteer_needs.length > 0)); // not sure how the data comes back
             case'RecentlyUpdated':
+                // Its not, technically random... If you put the same time in, it should produce the same output. heh..  -Rex
                 return current.filter(shelters => {
                     const now = DateTime.local().ts;
                     const updated = DateTime.fromISO(shelters.updated_at).ts;
