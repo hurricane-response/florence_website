@@ -49,7 +49,7 @@ $map-height: 90vh;
   flex-wrap: wrap;
   max-width: 50vw;
   transform: translateX(-200%);
-  transition: all linear 0.6s;
+  transition: all ease-in-out 0.4s;
 
   li, li:focus {
     background: rgba(255, 255, 255, 0.8);
