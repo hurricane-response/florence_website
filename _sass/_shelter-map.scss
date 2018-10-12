@@ -22,22 +22,66 @@ $map-height: 90vh;
 }
 
 #map-container {
-  overflow: hidden;
+  max-height: $map-height;
+
+  #map {
+    height: 100%;
+  }
 }
 
 #map-container.shelter-map_container #map {
-  min-height: $map-height;
-  max-height: $map-height;
+  height: $map-height;
+  margin-bottom: 0;
+
 }
 
 .shelter-map_info {
   position: absolute;
   top: 10px;
+  right: 138px;
   left: 10px;
   height: 0;
 }
+.shelter-map-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+// Geolocate Control
+
+
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl {
+  margin: 12px 10px 0 0;
+}
+
+.mapboxgl-ctrl-top-right div {
+  position: relative;
+  overflow: visible;
+}
+
+.mapboxgl-ctrl-top-right div::after {
+  content: 'Locate Yourself';
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 5px 0 5px;
+  height: 100%;
+  width: auto;
+  white-space: nowrap;
+  background: rgba(10, 10, 10, 0.39);
+  color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 1em 0 0 1em;
+  transform: translateX(-100%);
+}
+
 
 // Filter Controls
+
 
 #ShelterFilterToggle, #geolocate {
 
@@ -52,19 +96,31 @@ $map-height: 90vh;
   }
 }
 
+#ShelterFilterToggle {
+  width: 80px;
+}
+
+.filter-viewBox {
+  overflow: hidden;
+  width: 80px;
+}
+
 #ShelterFiltersUL {
   list-style: none;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   flex-wrap: wrap;
-  max-width: 50vw;
-  transform: translateX(-200%);
+  max-width: 80px;
+  transform: translateY(-200%);
   transition: all ease-in-out 0.4s;
+
   li {
     white-space: normal;
     size: 0.7em;
   }
+
   li, li:focus {
     background: rgba(255, 255, 255, 0.8);
     padding: 10px 10px;
@@ -81,5 +137,126 @@ $map-height: 90vh;
 
   &.visible {
     transform: translateX(0);
+  }
+}
+
+
+// Search
+
+
+#ShelterSearch {
+  width: 100%;
+
+  & .control {
+    width: 100%;
+  }
+
+  & a {
+    max-width: 36px;
+  }
+
+
+}
+
+#SearchResultsList {
+  position: absolute;
+  top: 47px;
+  left: 88px;
+  max-height: 200px;
+  overflow: auto;
+  background: rgba(245, 245, 245, 0.87);
+  padding: 0 3px;
+  right: 8px;
+  box-shadow: inset 0px -13px 34px -16px rgba(0,0,0,1);
+}
+
+.search-result_item {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  background: rgba(195, 243, 255, 0.42);
+  margin-bottom: 4px;
+  padding: 6px;
+
+  div {
+    padding: 0 6px;
+  }
+}
+
+
+// Map Legend
+
+
+#ShelterMapLegend {
+  max-width: 100vw;
+  background: antiquewhite;
+  border-radius: 0 0 1em 1em;
+  overflow: hidden;
+
+  .legend-details {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: 36px;
+    overflow: hidden;
+    padding: 8px;
+    width: 100%;
+  }
+
+  .legend-item {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 8px 0;
+    width: 320px;
+
+    img {
+      width: 32px;
+      height: auto;
+    }
+
+    .legend-item_label {
+      display: flex;
+      justify-content: flex-start;
+      padding-left: 8px;
+      width: 100%;
+    }
+
+    .legend-item_key {
+      display: flex;
+      justify-content: flex-start;
+      padding-left: 8px;
+      width: 100%;
+    }
+  }
+}
+
+.color-circle {
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: 1em;
+
+  &.evacuation-color {
+    background: $evacuation-route-color;
+  }
+}
+
+
+// Responsive
+
+
+@media (max-width: 480px) {
+  .mapboxgl-ctrl-top-right div::after {
+    display: none;
+  }
+
+  .shelter-map_info {
+    right: 48px;
+  }
+
+  #SearchResultsList {
+    right: -40px;
   }
 }

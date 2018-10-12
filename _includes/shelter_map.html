@@ -2,31 +2,91 @@
     <div id="map">
     </div>
     <div class="shelter-map_info">
-        <div class="map-controls">
+        <div class="shelter-map-controls">
+            <div id="ShelterSearch" class="field has-addons search-wrapper">
+                <div class="control">
+                    <input class="input" type="text" id="ShelterSearchInput" placeholder="Search Shelters" >
+                </div>
+                <a class="control">
+                    <button class="button is-danger" onclick="clearSearch();">X</button>
+                </a>
+            </div>
             <button id="ShelterFilterToggle" class="button is-info is-small" onclick="toggleFiltersVisibility();">
                 <svg id="icon-filter" viewBox="0 0 32 32" aria-label="filter icon">
                     <path d="M16 0c-8.837 0-16 2.239-16 5v3l12 12v10c0 1.105 1.791 2 4 2s4-0.895 4-2v-10l12-12v-3c0-2.761-7.163-5-16-5zM2.95 4.338c0.748-0.427 1.799-0.832 3.040-1.171 2.748-0.752 6.303-1.167 10.011-1.167s7.262 0.414 10.011 1.167c1.241 0.34 2.292 0.745 3.040 1.171 0.494 0.281 0.76 0.519 0.884 0.662-0.124 0.142-0.391 0.38-0.884 0.662-0.748 0.427-1.8 0.832-3.040 1.171-2.748 0.752-6.303 1.167-10.011 1.167s-7.262-0.414-10.011-1.167c-1.24-0.34-2.292-0.745-3.040-1.171-0.494-0.282-0.76-0.519-0.884-0.662 0.124-0.142 0.391-0.38 0.884-0.662z"></path>
                 </svg>
-                Filters</button>
+                Filters
+            </button>
         </div>
-        <ul id="ShelterFiltersUL" class="filters tabs">
-            <!--<li class="filter-item" id="ShelterFilter_All" onclick="onFilterClick(this.id)">All</li>-->
-            <!--<li class="filter-item" id="ShelterFilter_Accepting" onclick="onFilterClick(this.id)">Accepting</li>-->
-            <li class="filter-item" id="ShelterFilter_SpecialNeeds" onclick="onFilterClick(this.id)">Special Needs</li>
-            <li class="filter-item" id="ShelterFilter_PetsOK" onclick="onFilterClick(this.id)">Pets allowed</li>
-            <!--<li class="filter-item" id="ShelterFilter_SuppliesNeeded" onclick="onFilterClick(this.id)">Supplies Needed</li>-->
-            <!--<li class="filter-item" id="ShelterFilter_VolunteersNeeded" onclick="onFilterClick(this.id)">Volunteers Needed</li>-->
-        </ul>
+        <div class="filter-viewBox">
+            <ul id="ShelterFiltersUL" class="filters tabs">
+                <!--<li class="filter-item" id="ShelterFilter_All" onclick="onFilterClick(this.id)">All</li>-->
+                <!--<li class="filter-item" id="ShelterFilter_Accepting" onclick="onFilterClick(this.id)">Accepting</li>-->
+                <li class="filter-item" id="ShelterFilter_SpecialNeeds" onclick="onFilterClick(this.id)">Special Needs</li>
+                <li class="filter-item" id="ShelterFilter_PetsOK" onclick="onFilterClick(this.id)">Pets Allowed</li>
+                <!--<li class="filter-item" id="ShelterFilter_SuppliesNeeded" onclick="onFilterClick(this.id)">Supplies Needed</li>-->
+                <!--<li class="filter-item" id="ShelterFilter_VolunteersNeeded" onclick="onFilterClick(this.id)">Volunteers Needed</li>-->
+            </ul>
+        </div>
+        <ul id="SearchResultsList"></ul>
     </div>
 </div>
+<div id="ShelterMapLegend">
+    <ul id="LegendDetails" class="legend-details visible">
+        <li class="legend-item">
+            <div class="legend-item_label">
+                Evacuation Route
+            </div>
+            <div class="legend-item_key">
+                <div class="color-circle evacuation-color"></div>
+            </div>
+        </li>
+        <li class="legend-item">
+            <div class="legend-item_label">
+                Shelter
+            </div>
+            <div class="legend-item_key">
+                <img src="/assets/images/shelter-icon.png" alt="Shelter Icon">
+            </div>
+        </li>
+    </ul>
+</div>
+<script src="https://unpkg.com/lunr/lunr.js"></script>
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.4.3/Rx.js"></script>
+
 <script>
     window.shelters = null;
     let sheltersShown = [];
     let currentFilterActions = [];
+    let currentPopup;
 
     const SHELTER_API = 'https://hurricane-florence-api.herokuapp.com/api/v1/shelters';
     // const SHELTER_API  = 'https://irma-api.herokuapp.com/api/v1/shelters';
-    const MAP_LOAD_CENTER = [-82, 28];
+    const MAP_LOAD_CENTER = [-84.9832, 29.7258];
+
+    const onSearchInput$ = Rx.Observable.fromEvent(
+        document.getElementById('ShelterSearchInput'),
+        'keyup'
+    );
+
+    onSearchInput$
+        .debounceTime(1000)
+        .subscribe(res => {
+            if (!res.target.value) {
+                clearSearch()
+            } else {
+                const results = searchShelters(res.target.value);
+                renderSearchResults(results)
+            }
+        });
+
+    /**
+     *  Map Init
+     */
 
     mapboxgl.accessToken = '{{site.mapbox_access_token}}';
 
@@ -34,20 +94,15 @@
         container: 'map',
         style: 'mapbox://styles/sbma44/cjm0qon9e7u8l2sqliotzrlmi',
         center: MAP_LOAD_CENTER,
-        zoom: 6.1
+        zoom: 7.3
     });
     var oReq = new XMLHttpRequest();
-    oReq.onload = function (e) {
-        if (!(e && e.target && e.target.response && e.target.response.shelters))
-            return console.error('error fetching shelter JSON');
-        window.shelters = sheltersShown = e.target.response.shelters;
-        populateMarkers(sheltersShown);
-    };
+    oReq.onload = onShelterFetch;
     oReq.open('GET', SHELTER_API, true);
     oReq.responseType = 'json';
     oReq.send();
     var navControl = new mapboxgl.NavigationControl();
-    map.addControl(navControl, 'top-right');
+    map.addControl(navControl, 'bottom-right');
     map.addControl(new mapboxgl.GeolocateControl({
         positionOptions: {
             enableHighAccuracy: true
@@ -55,82 +110,125 @@
         trackUserLocation: true
     }));
 
+
     /**
-     * Builds a HTML template (Popup) from a shelter object.
-     *
-     * @params shelter
-     * @returns {string}
+     * Search
      */
-    function popupTemplate(shelter) {
 
-        const phoneLink = `
-            <div class="phone">
-                <svg id="icon-phone" height="32px" viewBox="0 0 32 32" aria-label="phone icon">
-                    <path d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"></path>
-                </svg>
-                <div class="phone-details" aria-label="shelter phone number">
-                    <a class="phone" role="link" href="tel:${shelter.cleanPhone}">${shelter.phone}</a>
-                </div>
-            </div>
-        `;
+    /**
+     * builds a searchable lunr index from an array of documents.
+     *
+     * @param documents
+     * @return {*}
+     */
+    function buildIndex(documents) {
+        return lunr(function () {
+            this.ref('id');
+            this.field('shelter');
+            this.field('address');
+            this.field('county');
+            this.field('zip');
+            this.field('city');
 
-        const address = `
-            <div class="address">
-                <svg id="icon-address" height="32px" viewBox="0 0 32 32" aria-label="address icon">
-                    <path d="M0 32h16v-32h-16v32zM10 4h4v4h-4v-4zM10 12h4v4h-4v-4zM10 20h4v4h-4v-4zM2 4h4v4h-4v-4zM2 12h4v4h-4v-4zM2 20h4v4h-4v-4zM18 10h14v2h-14zM18 32h4v-8h6v8h4v-18h-14z"></path>
-                </svg>
-                <div class="address-details" aria-label="address details">
-                    ${isFullAddress(shelter) ? shelter.address : shelterAddressToString(shelter)}
-                </div>
-            </div>
-        `;
-
-        const note = `
-            <div class="note">
-                <label><strong>Note:</strong></label>
-                <div class="note-details" aria-label="Notes for shelter">
-                    ${urlsToAnchors(shelter.notes)}
-                </div>
-            </div>
-        `;
-
-        const petsNote = `
-            <div class="note">
-                <label><strong>Pets:</strong></label>
-                <div class="note-details" aria-label="Notes for shelter pets policy">
-                    ${urlsToAnchors(shelter.pets_notes)}
-                </div>
-            </div>
-        `;
-
-        return `
-            <header class="popup-header">
-                <p class="is-size-4 has-text-centered">${shelter.shelter}</p>
-            </header>
-            <div class="shelter-details">
-                <div class="content is-size-6 has-text-left">
-                    ${!!shelter.address ? address : ``}
-                    ${isPhone(shelter) ? phoneLink : ``}
-                    <div class="controls">
-                        ${!!shelter.address
-                        ? `
-                            <a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/${encodeURIComponent(shelterAddressToString(shelter))}" aria-label="Get directions button">
-                                <svg id="icon-directions" height="100%" viewBox="0 0 32 32" aria-label="directions icon">
-                                    <path d="M17 32c-0.072 0-0.144-0.008-0.217-0.024-0.458-0.102-0.783-0.507-0.783-0.976v-15h-15c-0.469 0-0.875-0.326-0.976-0.783s0.129-0.925 0.553-1.123l30-14c0.381-0.178 0.833-0.098 1.13 0.199s0.377 0.749 0.199 1.13l-14 30c-0.167 0.358-0.524 0.577-0.906 0.577zM5.508 14h11.492c0.552 0 1 0.448 1 1v11.492l10.931-23.423-23.423 10.931z"></path>
-                                </svg>
-                                <div class="separator"></div>
-                                <label>Directions</label>
-                            </a>
-                        `
-                        : ``}
-                    </div>
-                    ${!!shelter.notes ? note : ``}
-                    ${!!shelter.pets_notes ? petsNote : ``}
-                </div>
-            </div>
-        `;
+            documents.forEach(function (doc) {
+                this.add(doc)
+            }, this)
+        });
     }
 
+    /**
+     * takes in a query string and outputs an array of shelters
+     *
+     * @param query
+     * @param fuzz
+     * @returns {shelters}
+     */
+    function searchShelters(query, fuzz = 1) {
+        query = query
+            .replace(' ', `~${fuzz} `);
+        if (query[-1] !== ' ') {
+            query = query.concat(`~${fuzz}`);
+        }
+        const index = buildIndex(sheltersShown);
+        const matches = index.search(query);
+        const matchedIds = matches.map(match => match.ref);
+        return shelters.filter(shelter => {
+            for (let id of matchedIds) {
+                if (+id === +shelter.id) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
+    /**
+     * puts the search results on the screen
+     *
+     * @param results
+     * @returns {void}
+     */
+
+    function renderSearchResults(results) {
+        let template = ``;
+        const resultsRef = document.getElementById('SearchResultsList');
+        for (let result of results) {
+            template += searchResultTemplate(result);
+        }
+        resultsRef.innerHTML = template;
+    }
+
+    /**
+     * clears search bar and removes the search results list.
+     *
+     * @returns {void}
+     */
+    function clearSearch() {
+        document.getElementById('ShelterSearchInput').value = '';
+        document.getElementById('SearchResultsList').innerHTML = '';
+    }
+
+    /**
+     * positions map and opens a popup for that shelter location
+     *
+     * @param lng
+     * @param lat
+     * @param shelterId
+     * @return {void}
+     */
+    function moveTo(lng, lat, shelterId){
+        map.flyTo({
+            center: [+lng, +lat],
+            zoom: 9
+        });
+        for ( let shelter of sheltersShown) {
+            if (+shelter.id === +shelterId) {
+                const popup = new mapboxgl.Popup({
+                    offset: 25,
+                    className: 'shelter-popup'
+                });
+                if (currentPopup) {
+                    currentPopup.remove();
+                }
+                currentPopup = popup;
+                popup.setLngLat([shelter.longitude, shelter.latitude])
+                    .setHTML(popupTemplate(shelter))
+                    .addTo(map);
+            }
+        }
+    }
+
+    /**
+     *  /End Search
+     */
+
+    function onShelterFetch(e) {
+        if (!(e && e.target && e.target.response && e.target.response.shelters)) {
+            return console.error('error fetching shelter JSON');
+        }
+        window.shelters = sheltersShown = e.target.response.shelters;
+        populateMarkers(sheltersShown);
+    }
 
     /**
      * https://github.com/hurricane-response/florence-api/issues/53
@@ -222,8 +320,8 @@
      *
      * Note: sh3lters is spelled this way to prevent window object collision.
      *
-     * @param sh3lters
-     * @return void
+     * @param sh3lters : shelter
+     * @return {void}
      */
     function populateMarkers(sh3lters) {
         sheltersShown.forEach(shelter => {
@@ -235,13 +333,13 @@
         for (let i = 0; i < sheltersShown.length; i++) {
             const el = document.createElement('div');
             el.className = 'marker';
-            const popup = new mapboxgl.Popup({
+            sheltersShown[i].popup = new mapboxgl.Popup({
                 offset: 25,
                 className: 'shelter-popup'
             }).setHTML(popupTemplate(sheltersShown[i]));
             sheltersShown[i].marker = new mapboxgl.Marker(el)
                 .setLngLat([sheltersShown[i].longitude, sheltersShown[i].latitude])
-                .setPopup(popup)
+                .setPopup(sheltersShown[i].popup)
                 .addTo(map);
         }
     }
@@ -250,6 +348,11 @@
      * Filters
      */
 
+    /**
+     * shows/hides the filter options
+     *
+     * @returns{void}
+     */
     function toggleFiltersVisibility() {
         const filtersRef = document.getElementById('ShelterFiltersUL');
         const filtersButtonRef = document.getElementById('ShelterFilterToggle');
@@ -264,6 +367,12 @@
         }
     }
 
+    /**
+     * activates the filter button and reduces the shownShelters to an accumulated filter conditions.
+     *
+     * @param id : number
+     * @returns {void}
+     */
     function onFilterClick(id) {
         const filterButtonRef = document.getElementById(id);
         const action = id.split('_')[1];
@@ -271,24 +380,14 @@
         if (filterButtonRef.className.match('active') ) {
             currentFilterActions = currentFilterActions.filter(val => val !== action);
             if (!ifIsAll()) {
-                const nextSheltersShown = currentFilterActions.reduce((nextShown, action) => {
-                    return nextShown = filterReducer(nextShown, action);
-                }, shelters);
-
-                populateMarkers(nextSheltersShown);
-
+                filterRenderMarkersByActions(currentFilterActions);
             }
             filterButtonRef.className = filterButtonRef.className.replace(' active', '');
 
         } else {
             currentFilterActions = [action, ...currentFilterActions];
             if (!ifIsAll()) {
-                const nextSheltersShown = currentFilterActions.reduce((nextShown, action) => {
-                    return nextShown = filterReducer(nextShown, action);
-                }, shelters);
-
-                populateMarkers(nextSheltersShown);
-
+                filterRenderMarkersByActions(currentFilterActions);
             }
             filterButtonRef.className = filterButtonRef.className.concat(' active');
         }
@@ -302,6 +401,31 @@
         }
     }
 
+    /**
+     * reduces the shownShelters relative filter actions
+     *
+     * @param actions : string[]
+     * @returns {void}
+     */
+    function filterRenderMarkersByActions(actions) {
+        const nextSheltersShown = actions.reduce((nextShown, action) => {
+            return nextShown = filterReducer(nextShown, action);
+        }, shelters);
+
+        const query = document.getElementById('ShelterSearchInput').value;
+        populateMarkers(nextSheltersShown);
+        if (query.length !== 0) {
+            renderSearchResults(searchShelters(query));
+        }
+    }
+
+    /**
+     * Used to filter the current showing shelters by a filter action which is the second half of the filters html id
+     *
+     * @param current {sheltersShown}
+     * @param action {string}
+     * @returns sheltersShown
+     */
     function filterReducer(current, action) {
         switch(action) {
             case'All':
@@ -321,4 +445,95 @@
                 return current;
         }
     }
+
+    /**
+     * generates a list item for the search results list
+     *
+     * @param props: shelter
+     * @returns {string}
+     */
+    function searchResultTemplate(props) {
+        return `
+            <li class="search-result_item" onclick="moveTo(${props.longitude}, ${props.latitude}, ${props.id})">
+                <div class="search-result_name"><bold>${props.shelter}</bold></div>
+                <div class="search-result_address"><small>${isFullAddress(props) ? props.address : shelterAddressToString(props)}</small></div>
+           </li>
+        `;
+    }
+
+    /**
+     * Builds a HTML template (Popup) from a shelter object.
+     *
+     * @params shelter
+     * @returns {string}
+     */
+    function popupTemplate(shelter) {
+
+        const phoneLink = `
+            <div class="phone">
+                <svg id="icon-phone" height="32px" viewBox="0 0 32 32" aria-label="phone icon">
+                    <path d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"></path>
+                </svg>
+                <div class="phone-details" aria-label="shelter phone number">
+                    <a class="phone" role="link" href="tel:${shelter.cleanPhone}">${shelter.phone}</a>
+                </div>
+            </div>
+        `;
+
+        const address = `
+            <div class="address">
+                <svg id="icon-address" height="32px" viewBox="0 0 32 32" aria-label="address icon">
+                    <path d="M0 32h16v-32h-16v32zM10 4h4v4h-4v-4zM10 12h4v4h-4v-4zM10 20h4v4h-4v-4zM2 4h4v4h-4v-4zM2 12h4v4h-4v-4zM2 20h4v4h-4v-4zM18 10h14v2h-14zM18 32h4v-8h6v8h4v-18h-14z"></path>
+                </svg>
+                <div class="address-details" aria-label="address details">
+                    ${isFullAddress(shelter) ? shelter.address : shelterAddressToString(shelter)}
+                </div>
+            </div>
+        `;
+
+        const note = `
+            <div class="note">
+                <label><strong>Note:</strong></label>
+                <div class="note-details" aria-label="Notes for shelter">
+                    ${urlsToAnchors(shelter.notes)}
+                </div>
+            </div>
+        `;
+
+        const petsNote = `
+            <div class="note">
+                <label><strong>Pets:</strong></label>
+                <div class="note-details" aria-label="Notes for shelter pets policy">
+                    ${urlsToAnchors(shelter.pets_notes)}
+                </div>
+            </div>
+        `;
+
+        return `
+            <header class="popup-header">
+                <p class="is-size-4 has-text-centered">${shelter.shelter}</p>
+            </header>
+            <div class="shelter-details">
+                <div class="content is-size-6 has-text-left">
+                    ${!!shelter.address ? address : ``}
+                    ${isPhone(shelter) ? phoneLink : ``}
+                    <div class="controls">
+                        ${!!shelter.address
+            ? `
+                            <a class="directions button is-link" target="_blank" href="https://www.google.com/maps/dir/current+location/${encodeURIComponent(shelterAddressToString(shelter))}" aria-label="Get directions button">
+                                <svg id="icon-directions" height="100%" viewBox="0 0 32 32" aria-label="directions icon">
+                                    <path d="M17 32c-0.072 0-0.144-0.008-0.217-0.024-0.458-0.102-0.783-0.507-0.783-0.976v-15h-15c-0.469 0-0.875-0.326-0.976-0.783s0.129-0.925 0.553-1.123l30-14c0.381-0.178 0.833-0.098 1.13 0.199s0.377 0.749 0.199 1.13l-14 30c-0.167 0.358-0.524 0.577-0.906 0.577zM5.508 14h11.492c0.552 0 1 0.448 1 1v11.492l10.931-23.423-23.423 10.931z"></path>
+                                </svg>
+                                <div class="separator"></div>
+                                <label>Directions</label>
+                            </a>
+                        ` : ``}
+                    </div>
+                    ${!!shelter.notes ? note : ``}
+                    ${!!shelter.pets_notes ? petsNote : ``}
+                </div>
+            </div>
+        `;
+    }
+
 </script>
